@@ -6,8 +6,7 @@ Created on Mon Nov  5 00:06:53 2018
 @author: Tyler Johnson
 """
 
-from flask import Flask, request, render_template, session, redirect, current_user, login_user
-from app.models import User
+from flask import Flask, request, render_template, session, redirect
 import sqlite3
 from passlib.hash import sha256_crypt
 app = Flask(__name__)
@@ -57,6 +56,7 @@ def makeuser():
 		return render_template("make.html")
 
 #might not work, delete this method if needed
+"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -70,6 +70,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
+"""
 	
 conn.commit()
 conn.close()
