@@ -8,6 +8,7 @@ Created on Mon Nov  5 00:06:53 2018
 
 from flask import Flask, request, render_template, session, redirect
 import sqlite3
+from passlib.hash import sha256_crypt
 app = Flask(__name__)
 
 app.secret_key = "53Da__de39^^w32$5)*8"
@@ -49,7 +50,7 @@ def testlogin():
 @app.route('/makeuser', methods=["POST", "GET"])
 def makeuser():
 	if (request.method=="POST"):
-		userinfo = [request.form['username'], request.form['password'], request.form['fact']]
+		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), request.form['fact']]
 		cur.execute("INSERT INTO users VALUES (?,?,?)", (userinfo))
 	else:
 		return render_template("make.html")
