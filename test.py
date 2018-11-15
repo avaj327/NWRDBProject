@@ -52,7 +52,7 @@ def login():
 		if user == None:
 			return 'Invalid Username'
 			
-		if password == user[1]:
+		if (sha256_crypt.verify(password, user[1]) == True):
 			session['user'] = user
 		else:
 			return 'Invalid Password'
