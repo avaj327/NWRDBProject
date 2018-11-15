@@ -7,5 +7,5 @@ To download and run:
 1. Download master branch as zip
 2. Extract zip file
 3. Navigate to the NWRDBProject-master folder in a command line
-4. Run the command export FLASK_APP=test.py
-5. Start the flask server
+4. Run the command: export FLASK_APP=test.py
+5. Run the command: flask run
