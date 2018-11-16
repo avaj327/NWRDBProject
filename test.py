@@ -23,7 +23,7 @@ def hello():
 
 @app.route('/user')
 def viewUser():
-	if ('username' in session):
+	if ('user' in session):
 		user = session['user']
 		username = user[0]
 		password = user[1]
