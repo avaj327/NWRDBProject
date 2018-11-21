@@ -1,0 +1,22 @@
+Goal #1: Using flask, create a log-in for a dummy account consisting of a username pointing to the account, an encrypted
+password as verification, and an arbitrary "fun fact" that can be displayed upon log-in
+TARGET DATE: 11/19/18
+ACHIEVED: 11/14/18
+  Individual goals:
+    Sean - learn about encryption and its application
+    Jake - front-end design using Jinja 2
+    Michael and Honorata - attatching front-end to back-end
+    Tyler and Honorata - learn more about HTML, figure out how to translate logging in to back-end
+    Sean - apply encryption to log-in and verification process
+    Michael and Jake - learn more about lists; figure out how to use loops to print lists of arbitrary lengths
+    
+ Goal #2: From an account page, create a data entry consisting of the activity name, time, and a boolean showing whether or not
+ it has been approveed by an advisor (arbitrary, for now)
+ TARGET DATE: 11/29/18
+ 
+ Goal #2.1: Create a boolean flag for teacher accounts, and redirect teacher account to a different page upon login
+ TARGET DATE: 11/29/18
+ 
+ Goal #2.2: Establish an aesthetic design, and create a login page using HTML
+ TARGET DATE: 11/29/18
+ 
