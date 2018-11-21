@@ -60,7 +60,22 @@ def login():
 		return redirect('/user')
 	else:
 		return render_template("form.html")
+
+@app.route('/userlist')
+def userlist():
+	conn = sqlite3.connect('database.db')
+	cur = conn.cursor()
+	users = cur.execute("SELECT * FROM users")
 	
+	names=[]
+	passwords=[]
+	facts=[]
+	for row in users:
+		names.append(row[0])
+		passwords.append(row[1])
+		facts.append(row[2])
+		
+	return render_template('userlist.html', names=names, passwords=passwords, facts=facts)
 
 @app.route('/makeuser', methods=["POST", "GET"])
 def makeuser():
