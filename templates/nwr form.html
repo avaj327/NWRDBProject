@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>NWR Club Database</title>
+<style> 
+#rcorners1 {
+    border-radius: 25px;
+	background: #5193ff;
+    padding: 20px; 
+    width: 200px;
+    height: 150px;
+	border: 2px solid black;
+}
+</style>
+</head>
+<body style="background-color:powderblue;">
+
+{%if incorrect%}
+alert("Your password is not correct")
+{%end if%}
+
+<h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
+<form method="post" action="mailto:13500063@northwarren.org">
+
+
+<legend align="left">Welcome!</legend>
+<br>
+	<table id=rcorners1>
+		<tr>
+			<td colspan=3>Please log in.</td>
+		</tr>
+		<tr>
+			<td colspan=3>Username: <input name="name" type="textbox" size="40"></td>
+		</tr>
+	<tr>
+		<td colspan=3>Password: <input name="name" type="textbox" size="40"></td>
+	</tr>
+	<tr>
+	<td colspan=3><input type = "button" value="Login" name="submit"
+onclick=""></td>
+	</tr>
+</table>
+</form>
+<br>
+<table>
+	<tr>
+		<td>
+		Not registered?  <a href="http://www.northwarren.org">Create an account</a>
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
