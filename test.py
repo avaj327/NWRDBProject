@@ -35,7 +35,7 @@ def viewUser():
 		password = user[1]
 		fact = user[2]
 		
-		return render_template(templates[user], username=username,password=password,fact=fact)
+		return render_template(templates["user"], username=username,password=password,fact=fact)
 	else:
 		return 'Please sign in.'
 
@@ -56,16 +56,16 @@ def login():
 				user = row
 				
 		if user == None:
-			return render_template(templates[login], incorrect=True)
+			return render_template(templates["login"], incorrect=True)
 			
 		if (sha256_crypt.verify(password, user[1]) == True):
 			session['user'] = user
 		else:
-			return render_template(templates[login], incorrect=True)
+			return render_template(templates["login"], incorrect=True)
 			
 		return redirect('/user')
 	else:
-		return render_template(templates[login], incorrect=False)
+		return render_template(templates["login"], incorrect=False)
 
 @app.route('/userlist')
 def userlist():
@@ -94,4 +94,4 @@ def makeuser():
 		conn.close()
 		return 'Sent.'
 	else:
-		return render_template("makeuser.html")
+		return render_template(templates["makeuser"])
