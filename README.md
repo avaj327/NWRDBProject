@@ -4,13 +4,21 @@ Database project made by NWR students, for NWR
 Using Flask Python Microframework
 
 <h2>Downloading</h2>
-To download and run:
+To download and run (external computer):
 <ol>
   <li>Download master branch as zip</li>
   <li>Extract zip file</li>
   <li>Navigate to the NWRDBProject-master folder in a command line</li>
   <li>Run the command: export FLASK_APP=test.py</li>
   <li>Run the command: flask run</li>
+</ol>
+<br>
+To download and run (NWR network server):
+<ol>
+  <li>Connect to the NWR server (see below)</li>
+  <li>Enter the command 'updategit [-b (branch)]'</li>
+  <li>Enter the command 'setflask'</li>
+  <li>Enter the command 'runflask'</li>
 </ol>
 <h2>Running on the network</h2>
 In the command terminal:
