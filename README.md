@@ -10,7 +10,7 @@ To download and run:
 3. Navigate to the NWRDBProject-master folder in a command line
 4. Run the command: export FLASK_APP=test.py
 5. Run the command: flask run
-<hr>
+
 <h2>Running on the network</h2>
 In the command terminal:
   Type "ssh student@10.1.10.88 -p 22"
