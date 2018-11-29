@@ -11,6 +11,12 @@ import sqlite3
 from passlib.hash import sha256_crypt
 app = Flask(__name__)
 
+templates = {
+	"login": "nwr form.html",
+	"makeuser": "makeuser.html",
+	"user": "user.html"
+}
+
 app.secret_key = "53Da__de39^^w32$5)*8"
 
 @app.route('/')
@@ -21,7 +27,7 @@ def index():
 def hello():
 	return 'Hello, World'
 
-@app.route('/user')
+@app.route('/user/')
 def viewUser():
 	if ('user' in session):
 		user = session['user']
@@ -29,7 +35,7 @@ def viewUser():
 		password = user[1]
 		fact = user[2]
 		
-		return render_template('user.html', username=username,password=password,fact=fact)
+		return render_template(templates["user"], username=username,password=password,fact=fact)
 	else:
 		return 'Please sign in.'
 
@@ -50,16 +56,16 @@ def login():
 				user = row
 				
 		if user == None:
-			return 'Invalid Username'
+			return render_template(templates["login"], incorrect=True)
 			
 		if (sha256_crypt.verify(password, user[1]) == True):
 			session['user'] = user
 		else:
-			return 'Invalid Password'
+			return render_template(templates["login"], incorrect=True)
 			
 		return redirect('/user')
 	else:
-		return render_template("form.html")
+		return render_template(templates["login"], incorrect=False)
 
 @app.route('/userlist')
 def userlist():
@@ -88,4 +94,4 @@ def makeuser():
 		conn.close()
 		return 'Sent.'
 	else:
-		return render_template("makeuser.html")
+		return render_template(templates["makeuser"])
