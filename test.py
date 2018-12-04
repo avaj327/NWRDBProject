@@ -37,7 +37,7 @@ def viewUser():
 
 		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel)
 	else:
-		return 'Please sign in.'
+		return redirect('/login')
 
 @app.route('/html')
 def html():
@@ -76,19 +76,23 @@ def userlist():
 	names=[]
 	passwords=[]
 	levels=[]
+	memberships=[]
+	advisories=[]
 	for row in users:
 		names.append(row[0])
 		passwords.append(row[1])
 		levels.append(row[2])
+		memberships.append(row[3])
+		advisories.append(row[4])
 
-	return render_template('userlist.html', names=names, passwords=passwords, levels=levels)
+	return render_template('userlist.html', names=names, passwords=passwords, levels=levels, memberships=memberships, advisories=advisories)
 
 @app.route('/makeuser', methods=["POST", "GET"])
 def makeuser():
 	if (request.method=="POST"):
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
-		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), "", ""]
+		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		conn.commit()
 		conn.close()
