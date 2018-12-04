@@ -39,7 +39,7 @@ def viewUser():
 		return 'Please sign in.'
     
 @app.route('/mod')
-def viewUser():
+def viewMod():
 	if ('user' in session):
 		user = session['user']
 		username = user[0]
