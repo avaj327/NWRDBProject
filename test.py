@@ -33,11 +33,11 @@ def viewUser():
 		user = session['user']
 		username = user[0]
 		password = user[1]
-		fact = user[2]
-		
-		return render_template(templates["user"], username=username,password=password,fact=fact)
+		adminLevel = user[2]
+
+		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel)
 	else:
-		return 'Please sign in.'
+		return redirect('/login')
 
 @app.route('/html')
 def html():
@@ -54,15 +54,15 @@ def login():
 		for row in cur.execute("SELECT * FROM users"):
 			if row[0] == username:
 				user = row
-				
+
 		if user == None:
 			return render_template(templates["login"], incorrect=True)
-			
+
 		if (sha256_crypt.verify(password, user[1]) == True):
 			session['user'] = user
 		else:
 			return render_template(templates["login"], incorrect=True)
-			
+
 		return redirect('/user')
 	else:
 		return render_template(templates["login"], incorrect=False)
@@ -72,24 +72,28 @@ def userlist():
 	conn = sqlite3.connect('database.db')
 	cur = conn.cursor()
 	users = cur.execute("SELECT * FROM users")
-	
+
 	names=[]
 	passwords=[]
-	facts=[]
+	levels=[]
+	memberships=[]
+	advisories=[]
 	for row in users:
 		names.append(row[0])
 		passwords.append(row[1])
-		facts.append(row[2])
-		
-	return render_template('userlist.html', names=names, passwords=passwords, facts=facts)
+		levels.append(row[2])
+		memberships.append(row[3])
+		advisories.append(row[4])
+
+	return render_template('userlist.html', names=names, passwords=passwords, levels=levels, memberships=memberships, advisories=advisories)
 
 @app.route('/makeuser', methods=["POST", "GET"])
 def makeuser():
 	if (request.method=="POST"):
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
-		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), request.form['fact']]
-		cur.execute("INSERT INTO users VALUES (?,?,?)", (userinfo))
+		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
+		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		conn.commit()
 		conn.close()
 		return 'Sent.'
