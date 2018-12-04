@@ -15,7 +15,7 @@ Using Flask Python Microframework
 <h2>To connect to the School's Network Server:</h2>
 <ol>
   <li>Open a command line prompt</li>
-  <li>Enter command: 'connect student@10.1.10.88'</li>
+  <li>Enter command: 'ssh student@10.1.10.88'</li>
   <li>If prompted to trust the connection, type 'yes'</li>
   <li>Enter password: 'student'</li>
 </ol>
