@@ -1,8 +1,8 @@
-
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
 Created on Mon Nov  5 00:06:53 2018
-@author: Sean Pergola and Tyler Johnson
+@author: Tyler Johnson and Sean Pergola
 """
 
 from flask import Flask, request, render_template, session, redirect
@@ -26,7 +26,7 @@ def index():
 def hello():
 	return 'Hello, World'
 
-@app.route('/user')
+@app.route('/user/')
 def viewUser():
 	if ('user' in session):
 		user = session['user']
@@ -36,10 +36,10 @@ def viewUser():
 
 		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel)
 	else:
-		return 'Please sign in.'
-    
-@app.route('/mod')
-def viewMod():
+		return redirect('/login')
+
+@app.route('/advisor/')
+def viewAdvisor():
 	if ('user' in session):
 		user = session['user']
 		username = user[0]
@@ -48,9 +48,9 @@ def viewMod():
 
 		return "ADVISOR!"
 	else:
-		return 'Please sign in.'
-    
-
+		return redirect('/login')
+	
+	
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')
@@ -62,12 +62,12 @@ def login():
 		cur = conn.cursor()
 		username = request.form['username']
 		password = request.form['password']
-		adminLevel = request.form["adminLevel"]
+		adminLevel = request.form['adminLevel']
 		user = None
 		for row in cur.execute("SELECT * FROM users"):
-			 if row[0] == username:
-				 user = row
-				 
+			if row[0] == username:
+				user = row
+
 		if user == None:
 			return render_template(templates["login"], incorrect=True)
 
@@ -75,12 +75,11 @@ def login():
 			session['user'] = user
 		else:
 			return render_template(templates["login"], incorrect=True)
-
+		
 		if adminLevel == 1:
-			return redirect('/mod')
-        
+			return redirect ('/advisor')
+
 		return redirect('/user')
-        
 	else:
 		return render_template(templates["login"], incorrect=False)
 
@@ -93,12 +92,16 @@ def userlist():
 	names=[]
 	passwords=[]
 	levels=[]
+	memberships=[]
+	advisories=[]
 	for row in users:
 		names.append(row[0])
 		passwords.append(row[1])
 		levels.append(row[2])
+		memberships.append(row[3])
+		advisories.append(row[4])
 
-	return render_template('userlist.html', names=names, passwords=passwords, levels=levels)
+	return render_template('userlist.html', names=names, passwords=passwords, levels=levels, memberships=memberships, advisories=advisories)
 
 @app.route('/makeuser', methods=["POST", "GET"])
 def makeuser():
