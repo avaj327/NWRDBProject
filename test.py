@@ -105,7 +105,7 @@ def makeuser():
 	if (request.method=="POST"):
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
-		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), "", ""]
+		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		conn.commit()
 		conn.close()
