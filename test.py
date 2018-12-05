@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Nov  5 00:06:53 2018
-
-@author: Tyler Johnson
+@author: Tyler Johnson and Sean Pergola
 """
 
 from flask import Flask, request, render_template, session, redirect
@@ -39,6 +38,19 @@ def viewUser():
 	else:
 		return redirect('/login')
 
+@app.route('/advisor/')
+def viewAdvisor():
+	if ('user' in session):
+		user = session['user']
+		username = user[0]
+		password = user[1]
+		adminLevel = user[2]
+
+		return "ADVISOR!"
+	else:
+		return redirect('/login')
+	
+	
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')
@@ -50,6 +62,7 @@ def login():
 		cur = conn.cursor()
 		username = request.form['username']
 		password = request.form['password']
+		adminLevel = request.form['adminLevel']
 		user = None
 		for row in cur.execute("SELECT * FROM users"):
 			if row[0] == username:
@@ -62,6 +75,9 @@ def login():
 			session['user'] = user
 		else:
 			return render_template(templates["login"], incorrect=True)
+		
+		if adminLevel == 1:
+			return redirect ('/advisor')
 
 		return redirect('/user')
 	else:
