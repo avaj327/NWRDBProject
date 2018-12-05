@@ -34,8 +34,60 @@ def viewUser():
 		username = user[0]
 		password = user[1]
 		adminLevel = user[2]
+		rawMemberships = user[3].split(",")
+		rawAdvisories = user[4].split(",")
 
-		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel)
+		memberships_ = []
+		advisories_ = []
+
+		memberships = []
+		advisories = []
+
+		for each in rawMemberships: #strip unnecessary characters
+			for i in range(len(each)-1):
+				if i < len(each)-1:
+					if each[i] == " ":
+						each = each[:i] + each[i+1:]
+					if each[i] == "[":
+						each = each[:i] + each[i+1:]
+					if each[i] == "]":
+						each = each[:i] + each[i+1:]
+					if each[i] == "'":
+						each = each[:i] + each[i+1:]
+			each = each[:len(each)-1]
+			memberships_.append(each)
+
+		for each in memberships_: #replace '_' with spaces
+			for i in range(len(each)-1):
+				if i < len(each)-1:
+					if each[i] == "_":
+						each = each[:i] + " " + each[i+1:]
+			each = each[:len(each)-1]
+			memberships.append(each)
+
+		for each in rawAdvisories: #strip unnecessary characters
+			for i in range(len(each)-1):
+				if i < len(each)-1:
+					if each[i] == " ":
+						each = each[:i] + each[i+1:]
+					if each[i] == "[":
+						each = each[:i] + each[i+1:]
+					if each[i] == "]":
+						each = each[:i] + each[i+1:]
+					if each[i] == "'":
+						each = each[:i] + each[i+1:]
+			each = each[:len(each)-1]
+			advisories_.append(each)
+
+		for each in advisories_: #replace '_' with spaces
+			for i in range(len(each)-1):
+				if i < len(each)-1:
+					if each[i] == "_":
+						each = each[:i] + " " + each[i+1:]
+			each = each[:len(each)-1]
+			advisories.append(each)
+
+		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
 
