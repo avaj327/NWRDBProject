@@ -13,7 +13,7 @@ app = Flask(__name__)
 templates = {
 	"login": "nwr form.html",
 	"makeuser": "makeuser.html",
-	"user": "user.html"
+	"user": "DatabaseClubList1.html"
 }
 
 app.secret_key = "53Da__de39^^w32$5)*8"
@@ -86,7 +86,8 @@ def viewUser():
 			each = each[:len(each)-1]
 			advisories.append(each)
 
-		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+		return render_template(templates["user"])
+		#return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
 
