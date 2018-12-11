@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Nov  5 00:06:53 2018
-
-@author: Tyler Johnson
+@author: Tyler Johnson and Sean Pergola
 """
 
 from flask import Flask, request, render_template, session, redirect
@@ -14,7 +13,7 @@ app = Flask(__name__)
 templates = {
 	"login": "nwr form.html",
 	"makeuser": "makeuser.html",
-	"user": "user.html"
+	"user": "DatabaseClubList1.html"
 }
 
 app.secret_key = "53Da__de39^^w32$5)*8"
@@ -87,10 +86,24 @@ def viewUser():
 			each = each[:len(each)-1]
 			advisories.append(each)
 
-		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+		return render_template(templates["user"])
+		#return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
 
+@app.route('/advisor/')
+def viewAdvisor():
+	if ('user' in session):
+		user = session['user']
+		username = user[0]
+		password = user[1]
+		adminLevel = user[2]
+
+		return "ADVISOR!"
+	else:
+		return redirect('/login')
+	
+	
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')
