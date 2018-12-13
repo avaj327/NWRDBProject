@@ -168,5 +168,6 @@ def makeuser():
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		conn.commit()
 		conn.close()
+		return "Sent."
 	else:
 		return render_template(templates["makeuser"])
