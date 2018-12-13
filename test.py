@@ -93,7 +93,7 @@ def viewUser():
 		return render_template(templates["finalUser"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
-
+"""
 @app.route('/advisor/')
 def viewAdvisor():
 	if ('user' in session):
@@ -105,7 +105,7 @@ def viewAdvisor():
 		return "ADVISOR!"
 	else:
 		return redirect('/login')
-	
+"""	
 	
 @app.route('/html')
 def html():
@@ -130,9 +130,6 @@ def login():
 			session['user'] = user
 		else:
 			return render_template(templates["login"], incorrect=True)
-		
-		if adminLevel == 1:
-			return redirect ('/advisor')
 
 		return redirect('/user')
 	else:
