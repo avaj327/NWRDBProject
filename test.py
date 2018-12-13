@@ -16,7 +16,7 @@ templates = {
 	"index": "index.htm",
 	"finalLogin": "DataBaseLogin1.html",
 	"clubList": "DatabaseClubList1.html",
-	"finalUser" : "UserPageDatabase.html"
+	"finalUser" : "UserPageDatabase.html",
 	"user": "DatabaseClubList1.html"
 }
 
