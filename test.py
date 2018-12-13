@@ -118,7 +118,6 @@ def login():
 		cur = conn.cursor()
 		username = request.form['username']
 		password = request.form['password']
-		adminLevel = request.form['adminLevel']
 		user = None
 		for row in cur.execute("SELECT * FROM users"):
 			if row[0] == username:
