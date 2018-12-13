@@ -13,11 +13,11 @@ app = Flask(__name__)
 templates = {
 	"login": "nwr form.html",
 	"makeuser": "makeuser.html",
-	"user": "user.html",
 	"index": "index.htm",
 	"finalLogin": "DataBaseLogin1.html",
 	"clubList": "DatabaseClubList1.html",
 	"finalUser" : "UserPageDatabase.html"
+	"user": "DatabaseClubList1.html"
 }
 
 app.secret_key = "53Da__de39^^w32$5)*8"
