@@ -115,7 +115,6 @@ def login():
 		cur = conn.cursor()
 		username = request.form['username']
 		password = request.form['password']
-		adminLevel = request.form['adminLevel']
 		user = None
 		for row in cur.execute("SELECT * FROM users"):
 			if row[0] == username:
@@ -128,9 +127,6 @@ def login():
 			session['user'] = user
 		else:
 			return render_template(templates["login"], incorrect=True)
-		
-		if adminLevel == 1:
-			return redirect ('/advisor')
 
 		return redirect('/user')
 	else:
