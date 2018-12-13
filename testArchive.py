@@ -13,11 +13,7 @@ app = Flask(__name__)
 templates = {
 	"login": "nwr form.html",
 	"makeuser": "makeuser.html",
-	"index": "index.htm",
-	"finalLogin": "DataBaseLogin1.html",
-	"clubList": "DatabaseClubList1.html",
-	"finalUser" : "UserPageDatabase.html"
-	"user": "DatabaseClubList1.html"
+	"user": "user.html"
 }
 
 app.secret_key = "53Da__de39^^w32$5)*8"
@@ -90,10 +86,10 @@ def viewUser():
 			each = each[:len(each)-1]
 			advisories.append(each)
 
-		return render_template(templates["finalUser"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
-"""
+
 @app.route('/advisor/')
 def viewAdvisor():
 	if ('user' in session):
@@ -105,7 +101,7 @@ def viewAdvisor():
 		return "ADVISOR!"
 	else:
 		return redirect('/login')
-"""	
+	
 	
 @app.route('/html')
 def html():
@@ -118,6 +114,7 @@ def login():
 		cur = conn.cursor()
 		username = request.form['username']
 		password = request.form['password']
+		adminLevel = request.form['adminLevel']
 		user = None
 		for row in cur.execute("SELECT * FROM users"):
 			if row[0] == username:
@@ -130,6 +127,9 @@ def login():
 			session['user'] = user
 		else:
 			return render_template(templates["login"], incorrect=True)
+		
+		if adminLevel == 1:
+			return redirect ('/advisor')
 
 		return redirect('/user')
 	else:
@@ -164,6 +164,6 @@ def makeuser():
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		conn.commit()
 		conn.close()
-		return "Sent."
+		return 'Sent.'
 	else:
 		return render_template(templates["makeuser"])
