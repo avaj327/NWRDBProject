@@ -129,11 +129,11 @@ def login():
 		if (sha256_crypt.verify(password, user[1]) == True):
 			session['user'] = user
 		else:
-			return render_template(templates["finalLogin"], incorrect=True)
+			return render_template(templates["login"], incorrect=True)
 
 		return redirect('/user')
 	else:
-		return render_template(templates["finalLogin"], incorrect=False)
+		return render_template(templates["login"], incorrect=False)
 
 @app.route('/userlist')
 def userlist():
