@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>User List</title>
+		<style>
+			.center{
+				text-align:center;
+			}
+			td{
+				padding:5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div id='container'>
+		<table>
+			<tr>
+				<td class='center'>Username<hr></td>
+				<td class='center'>AdminLevel<hr></td>
+				<td class='center'>Memberships<hr></td>
+				<td class='center'>Advisories<hr></td>
+			</tr>
+			<tr>
+				<td>{%for name in names%}{{name}}<br><hr>{%endfor%}</td>
+				<td>{%for level in levels%}{{level}}<br><hr>{%endfor%}</td>
+				<td>{%for member in memberships%}{{member}}<br><hr>{%endfor%}</td>
+				<td>{%for advisor in advisories%}{{advisor}}<br><hr>{%endfor%}</td>
+			</tr>
+		</table>
+	</div>
+	</body>
+</html>
