@@ -11,12 +11,10 @@ from passlib.hash import sha256_crypt
 app = Flask(__name__)
 
 templates = {
-	"login": "nwr form.html",
+	"login": "DataBaseLogin1.html",
 	"makeuser": "makeuser.html",
 	"index": "index.htm",
-	"finalLogin": "DataBaseLogin1.html",
 	"clubList": "DatabaseClubList1.html",
-	"finalUser" : "UserPageDatabase.html",
 	"user": "DatabaseClubList1.html"
 }
 
@@ -90,7 +88,7 @@ def viewUser():
 			each = each[:len(each)-1]
 			advisories.append(each)
 
-		return render_template(templates["finalUser"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
 """
