@@ -8,6 +8,7 @@ Created on Mon Nov  5 00:06:53 2018
 from flask import Flask, request, render_template, session, redirect
 import sqlite3
 from passlib.hash import sha256_crypt
+from clubs import clubs
 app = Flask(__name__)
 
 templates = {
@@ -33,77 +34,104 @@ def viewUser():
 	if ('user' in session):
 		user = session['user']
 		username = user[0]
-		password = user[1]
 		adminLevel = user[2]
 		rawMemberships = user[3].split(",")
 		rawAdvisories = user[4].split(",")
+		
+		print ("RAW: " + str(rawMemberships))
 
 		memberships_ = []
 		advisories_ = []
 
 		memberships = []
 		advisories = []
-
-		for each in rawMemberships: #strip unnecessary characters
-			for i in range(len(each)-1):
-				if i < len(each)-1:
-					if each[i] == " ":
-						each = each[:i] + each[i+1:]
-					if each[i] == "[":
-						each = each[:i] + each[i+1:]
-					if each[i] == "]":
-						each = each[:i] + each[i+1:]
-					if each[i] == "'":
-						each = each[:i] + each[i+1:]
-			each = each[:len(each)-1]
+		
+		membershipClubs = []
+		
+		#strip unnecessary characters for memberships
+		for each in rawMemberships:
+			i = 0
+			length = len(each)
+			while i < length:
+				print (each[i])
+				if each[i] == " ":
+					each = each[:i] + each[i+1:]
+				if each[i] == "[":
+					each = each[:i] + each[i+1:]
+				if each[i] == "]":
+					each = each[:i] + each[i+1:]
+				if each[i] == "'":
+					each = each[:i] + each[i+1:]
+				i += 1
+				length = len(each)
+			each = each[:len(each)]
 			memberships_.append(each)
-
-		for each in memberships_: #replace '_' with spaces
+			
+		#STUPID JANK FIX FOR END OF ARRAY ']'
+		last = memberships_[len(memberships_)-1]
+		lastLen = len(last)-1
+		print ("LAST LEN:    " + last[lastLen])
+		if last[lastLen] == "]":
+			print ("EVIL CHARACTER FOUND")
+			last = last[:lastLen]
+		
+		memberships_.pop(len(rawMemberships)-1)
+		memberships_.append(last)
+			
+		last = rawMemberships[len(rawMemberships)-1]
+		lastLen = len(last)-1
+		print ("LAST LEN:    " + last[lastLen])
+			
+		#replace '_' with spaces for memberships
+		for each in memberships_: 
 			for i in range(len(each)-1):
-				if i < len(each)-1:
+				if i < len(each):
 					if each[i] == "_":
 						each = each[:i] + " " + each[i+1:]
-			each = each[:len(each)-1]
+			each = each[:len(each)]
 			memberships.append(each)
 
-		for each in rawAdvisories: #strip unnecessary characters
-			for i in range(len(each)-1):
-				if i < len(each)-1:
-					if each[i] == " ":
-						each = each[:i] + each[i+1:]
-					if each[i] == "[":
-						each = each[:i] + each[i+1:]
-					if each[i] == "]":
-						each = each[:i] + each[i+1:]
-					if each[i] == "'":
-						each = each[:i] + each[i+1:]
-			each = each[:len(each)-1]
+		#strip unnecessary characters for advisories
+		for each in rawAdvisories:
+			i = 0
+			length = len(each)-1
+			while i <= length:
+				print (each[i])
+				if each[i] == " ":
+					each = each[:i] + each[i+1:]
+				if each[i] == "[":
+					each = each[:i] + each[i+1:]
+				if each[i] == "]":
+					each = each[:i] + each[i+1:]
+				if each[i] == "'":
+					each = each[:i] + each[i+1:]
+				i += 1
+				length = len(each)-1
+			each = each[:len(each)]
 			advisories_.append(each)
 
-		for each in advisories_: #replace '_' with spaces
+		#replace '_' with spaces for advisories
+		for each in advisories_: 
 			for i in range(len(each)-1):
-				if i < len(each)-1:
+				if i < len(each):
 					if each[i] == "_":
 						each = each[:i] + " " + each[i+1:]
-			each = each[:len(each)-1]
+			each = each[:len(each)]
 			advisories.append(each)
+			
+		print (memberships)
+			
+		#create membership club array from membership string array
+		for each in memberships:
+			 club = clubs(each)
+			 membershipClubs.append(club)
+		
+		print (membershipClubs)
+			
 
-		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
-"""
-@app.route('/advisor/')
-def viewAdvisor():
-	if ('user' in session):
-		user = session['user']
-		username = user[0]
-		password = user[1]
-		adminLevel = user[2]
-
-		return "ADVISOR!"
-	else:
-		return redirect('/login')
-"""	
 	
 @app.route('/html')
 def html():
