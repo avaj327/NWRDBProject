@@ -31,7 +31,7 @@ def hello():
 @app.route('/clublist/')
 def viewClubList():
     if ('user' in session):
-        return templates[clubList]
+        return templates["clubList"]
     else:
         return redirect(login)
 
