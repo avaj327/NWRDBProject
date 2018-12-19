@@ -28,6 +28,13 @@ def index():
 def hello():
 	return 'Hello, World'
 
+@app.route('/clublist/')
+def viewClubList():
+    if ('user' in session):
+        return templates[clublist]
+    else:
+        return redirect(login)
+
 @app.route('/user/')
 def viewUser():
 	if ('user' in session):
