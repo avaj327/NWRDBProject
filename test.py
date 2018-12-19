@@ -15,7 +15,7 @@ templates = {
 	"makeuser": "makeuser.html",
 	"index": "index.htm",
 	"clubList": "DatabaseClubList1.html",
-	"user": "DataBaseLogin1.html"
+	"user": "UserPageDatabase.html"
 }
 
 app.secret_key = "53Da__de39^^w32$5)*8"
