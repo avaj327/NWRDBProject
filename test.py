@@ -33,15 +33,8 @@ def viewClubList():
     if ('user' in session):
 	user = session['user']
 	username = user[0]
-	password = user[1]
-	adminLevel = user[2]
-	rawMemberships = user[3].split(",")
-	rawAdvisories = user[4].split(",")
-
-	memberships_ = []
-	advisories_ = []
 		
-        return render_template(templates["clubList"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+        return render_template(templates["clubList"], username=username)
     else:
         return redirect(login)
 
