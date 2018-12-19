@@ -31,7 +31,7 @@ def hello():
 @app.route('/clublist/')
 def viewClubList():
     if ('user' in session):
-        return render_template(templates["clubList"])
+        return render_template(templates["clubList"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
     else:
         return redirect(login)
 
