@@ -36,7 +36,7 @@ def viewClubList():
 		
         return render_template(templates["clubList"], username=username)
     else:
-        return redirect(login)
+        return redirect("/login")
 
 @app.route('/user/')
 def viewUser():
