@@ -31,17 +31,19 @@ def hello():
 @app.route('/clublist/')
 def viewClubList():
     if ('user' in session):
-	user = session['user']
-	username = user[0]
-		
-        return render_template(templates["clubList"], username=username)
+        user = session['user']
+        username = user[0]
+		return render_template(templates["clubList"], username=username)
+
     else:
         return redirect("/login")
 
 @app.route('/dataEntry/')
 def viewDataEntry:
      if ('user' in session):
-          	
+        user = session['user']
+        username = user[0]
+        return render_template(templates["dataEntry"], username=username)
 
 @app.route('/user/')
 def viewUser():
@@ -106,19 +108,6 @@ def viewUser():
 		return render_template(templates["user"], username=username,password=password,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
 	else:
 		return redirect('/login')
-"""
-@app.route('/advisor/')
-def viewAdvisor():
-	if ('user' in session):
-		user = session['user']
-		username = user[0]
-		password = user[1]
-		adminLevel = user[2]
-
-		return "ADVISOR!"
-	else:
-		return redirect('/login')
-"""	
 	
 @app.route('/html')
 def html():
