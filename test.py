@@ -33,7 +33,7 @@ def viewClubList():
     if ('user' in session):
         user = session['user']
         username = user[0]
-	return render_template(templates["clubList"], username=username)
+		return render_template(templates["clubList"], username=username)
 
     else:
         return redirect("/login")
