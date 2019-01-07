@@ -39,7 +39,7 @@ def viewClubList():
         return redirect("/login")
 
 @app.route('/dataEntry/')
-def viewDataEntry:
+def viewDataEntry():
      if ('user' in session):
         user = session['user']
         username = user[0]
