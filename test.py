@@ -29,6 +29,10 @@ def index():
 def hello():
 	return 'Hello, World'
 
+@app.route('/clubs')
+def clublist():
+	return render_template(templates["clubList"])
+
 @app.route('/user/')
 def viewUser():
 	if ('user' in session):
@@ -129,7 +133,7 @@ def viewUser():
 		print (membershipClubs)
 			
 
-		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=memberships,advisories=advisories)
+		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=membershipClubs,advisories=advisories)
 	else:
 		return redirect('/login')
 	
