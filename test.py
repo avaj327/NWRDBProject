@@ -13,7 +13,7 @@ app = Flask(__name__)
 templates = {
 	"login": "DataBaseLogin1.html",
 	"makeuser": "makeuser.html",
-	"index": "index.htm",
+	"dataEntry": "index.htm",
 	"clubList": "DatabaseClubList1.html",
 	"user": "UserPageDatabase.html"
 }
@@ -37,6 +37,11 @@ def viewClubList():
         return render_template(templates["clubList"], username=username)
     else:
         return redirect("/login")
+
+@app.route('/dataEntry/')
+def viewDataEntry:
+     if ('user' in session):
+          	
 
 @app.route('/user/')
 def viewUser():
