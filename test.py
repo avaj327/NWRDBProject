@@ -38,7 +38,7 @@ def viewDataEntry():
         conn.commit()
         conn.close()
         return "Sent."
-    else if ('user' in session):
+    elif ('user' in session):
         user = session['user']
         username = user[0]
         return render_template(templates["dataEntry"], username=username)
