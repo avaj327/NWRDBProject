@@ -33,17 +33,26 @@ def viewClubList():
     if ('user' in session):
         user = session['user']
         username = user[0]
-	return render_template(templates["clubList"], username=username)
+		return render_template(templates["clubList"], username=username)
 
     else:
         return redirect("/login")
 
 @app.route('/dataEntry/')
-def viewDataEntry():
-     if ('user' in session):
+def viewDataEntry:
+    if (request.method=="POST"):
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        #cur.execute()
+        conn.commit()
+        conn.close()
+        return "Sent."
+    else if ('user' in session):
         user = session['user']
         username = user[0]
         return render_template(templates["dataEntry"], username=username)
+    else:
+        return redirect("/login")
 
 @app.route('/user/')
 def viewUser():
