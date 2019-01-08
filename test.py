@@ -14,7 +14,7 @@ app = Flask(__name__)
 templates = {
 	"login": "DataBaseLogin1.html",
 	"makeuser": "makeuser.html",
-	"index": "index.htm",
+	"dataEntry": "index.htm",
 	"clubList": "DatabaseClubList1.html",
 	"user": "UserPageDatabase.html"
 }
@@ -28,6 +28,22 @@ def index():
 @app.route('/hello')
 def hello():
 	return 'Hello, World'
+
+@app.route('/dataEntry/')
+def viewDataEntry:
+    if (request.method=="POST"):
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        #cur.execute()
+        conn.commit()
+        conn.close()
+        return "Sent."
+    else if ('user' in session):
+        user = session['user']
+        username = user[0]
+        return render_template(templates["dataEntry"], username=username)
+    else:
+        return redirect("/login")
 
 @app.route('/clubs')
 def clublist():
@@ -74,9 +90,7 @@ def viewUser():
 		#STUPID JANK FIX FOR END OF ARRAY ']'
 		last = memberships_[len(memberships_)-1]
 		lastLen = len(last)-1
-		print ("LAST LEN:    " + last[lastLen])
 		if last[lastLen] == "]":
-			print ("EVIL CHARACTER FOUND")
 			last = last[:lastLen]
 		
 		memberships_.pop(len(rawMemberships)-1)
@@ -84,7 +98,6 @@ def viewUser():
 			
 		last = rawMemberships[len(rawMemberships)-1]
 		lastLen = len(last)-1
-		print ("LAST LEN:    " + last[lastLen])
 			
 		#replace '_' with spaces for memberships
 		for each in memberships_: 
@@ -122,17 +135,12 @@ def viewUser():
 						each = each[:i] + " " + each[i+1:]
 			each = each[:len(each)]
 			advisories.append(each)
-			
-		print (memberships)
-			
+
 		#create membership club array from membership string array
 		for each in memberships:
 			 club = clubs(each)
 			 membershipClubs.append(club)
-		
-		print (membershipClubs)
-			
-
+    
 		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=membershipClubs,advisories=advisories)
 	else:
 		return redirect('/login')
