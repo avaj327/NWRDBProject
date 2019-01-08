@@ -104,8 +104,8 @@ body {font-family: "Lato", sans-serif;}
 <div class="tab">
 {% for i in range(memberships|length)%}
 {% set club = memberships[i] %}
- <button class="tablinks" onclick="clubSpot(event, 'club' + {{i}})" id="defaultOpen">{{club.name}}</button>
- <div id="club" + {{i}} class="tabcontent">
+ <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
+ <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
  </div>
