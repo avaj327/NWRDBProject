@@ -28,15 +28,15 @@ body {
   color: white;
 }
 .button {
-  background-color: powderblue;
+  background-color: red;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 4px 8px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  font-size: 14px;
+  margin: 2px 1px;
   cursor: pointer;
 }
 </style>
@@ -44,10 +44,9 @@ body {
 <body>
 
 <div class="topnav">
-  <a class="#home" href="#home">Home</a>
-  <a href="#clublist">Club List</a>
-  <a href="#logout">Logout</a>
-  <a href="#about">About</a>
+  <a href="?home">Home</a>
+  <a href="?clublist">Club List</a>
+  <a href="?logout">Logout</a>
   <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
 </div>
 
@@ -58,8 +57,7 @@ body {
   <h2>Welcome!</h2>
   <p>You are officially logged on to the North Warren Club Database!</p>
   <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
-  <p>You can add a new club by clicking <td colspan=3><input type = "button" class="button" value="here" name="addclub"
-onclick=""></td></p>
+  <p>You can add a new club by clicking <a href="url_4(10.1.10.88:5000/userlist)"><input type = "button" class="button" value="here" name="addclub"></a></p>
 </div> 
 
 
