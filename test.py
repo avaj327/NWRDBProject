@@ -205,3 +205,8 @@ def makeuser():
 		return "Sent."
 	else:
 		return render_template(templates["makeuser"])
+
+@app.route('/logout')
+def logout():
+	session.clear()
+	return redirect('/login')
