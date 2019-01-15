@@ -209,10 +209,10 @@ def makeuser():
 		cur = conn.cursor()
 		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
-        for userClub in request.form.getlist('memberships'):
-            create_table(conn, """CREATE TABLE IF NOT EXISTS """ + request.form['username'] = "/" + str(userClub) + userTableFields)
-		conn.commit()
-		conn.close()
-		return "Sent."
+        	for userClub in request.form.getlist('memberships'):
+            		create_table(conn, """CREATE TABLE IF NOT EXISTS """ + request.form['username'] = "/" + str(userClub) + userTableFields)
+	conn.commit()
+	conn.close()
+	return "Sent."
 	else:
 		return render_template(templates["makeuser"])
