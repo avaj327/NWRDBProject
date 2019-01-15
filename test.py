@@ -21,6 +21,12 @@ templates = {
 
 app.secret_key = "53Da__de39^^w32$5)*8"
 
+userTableFields = """ (
+    name varchar(255) NOT NULL PRIMARY KEY,
+    hours integer NOT NULL,
+    approved integer NOT NULL
+    ); """
+
 @app.route('/')
 def index():
 	return 'Index Page'
@@ -45,9 +51,12 @@ def viewDataEntry():
     else:
         return redirect("/login")
 
-@app.route('/clubs')
+@app.route('/clubs', methods=["POST", "GET"])
 def clublist():
-	return render_template(templates["clubList"])
+    if (request.method=="POST"):
+    #TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
+    else:
+        return render_template(templates["clubList"])
 
 @app.route('/user/')
 def viewUser():
@@ -200,13 +209,10 @@ def makeuser():
 		cur = conn.cursor()
 		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
+        for userClub in request.form.getlist('memberships'):
+            create_table(conn, """CREATE TABLE IF NOT EXISTS """ + request.form['username'] = "/" + str(userClub) + userTableFields)
 		conn.commit()
 		conn.close()
 		return "Sent."
 	else:
 		return render_template(templates["makeuser"])
-
-@app.route('/logout')
-def logout():
-	session.clear()
-	return redirect('/login')
