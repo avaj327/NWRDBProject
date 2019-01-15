@@ -54,7 +54,7 @@ def viewDataEntry():
 @app.route('/clubs', methods=["POST", "GET"])
 def clublist():
     if (request.method=="POST"):
-    #TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
+    	pass#TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
     else:
         return render_template(templates["clubList"])
 
