@@ -196,10 +196,10 @@ def userlist():
     advisories=[]
     for row in users:
         names.append(row[0])
-            passwords.append(row[1])
-            levels.append(row[2])
-            memberships.append(row[3])
-            advisories.append(row[4])
+        passwords.append(row[1])
+        levels.append(row[2])
+        memberships.append(row[3])
+        advisories.append(row[4])
         
     return render_template('userlist.html', names=names, passwords=passwords, levels=levels, memberships=memberships, advisories=advisories)
 
