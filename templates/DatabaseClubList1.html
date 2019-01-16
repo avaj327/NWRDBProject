@@ -98,7 +98,6 @@ body {font-family: "Lato", sans-serif;}
 <h2 style="color:red;">Club List</h2>
 <p>Click on the clubs to learn more:</p>
 
-<form name='testform' method='POST' onsubmit='test.py'>
 <div class="tab">
 {% for i in range(memberships|length)%}
 {% set club = memberships[i] %}
@@ -112,8 +111,6 @@ body {font-family: "Lato", sans-serif;}
   <p>{{club.desc}}</p>
   </div>
   {% endfor %}
-<input type='submit' name='submit' value='Submit'>
-</form>
   
 <script>
 function clubSpot(evt, clubName) {
