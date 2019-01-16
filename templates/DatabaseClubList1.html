@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NWR Club Page</title>
+</head>
 <body style="background-color:powderblue;">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -27,40 +31,23 @@ body {
   background-color: #4CAF50;
   color: white;
 }
-.button {
-  background-color: red;
-  border: none;
-  color: white;
-  padding: 4px 8px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 2px 1px;
-  cursor: pointer;
-}
 </style>
 </head>
 <body>
 
 <div class="topnav">
-  	<a href= {{url_for('viewUser')}}>Home</a>
+	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
-	<a href= {{url_for('logout')}}>Logout</a>
-  <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
+	<a href= {{url_for('logout')}}>Logout</a> 
+ <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
 </div>
 
 <h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
-
-
-<div style="background-color:#0000ff;color:white;padding:20px;">
-  <h2>Welcome!</h2>
-  <p>You are officially logged on to the North Warren Club Database!</p>
-  <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
-  <p>You can add a new club by clicking <a href= {{url_for('clublist')}}><input type = "button" class="button" value="here" name="addclub"></a></p>
-</div> 
-
-
+ <div style="background-color:#0000ff;color:white;padding:20px;">
+  <p>Here is a list of all the clubs entered in the database.</p>
+  <p>By clicking on a club, you will be given more information about said club. Then by clicking on the check box next to the name, you can join that club!</p>
+  </div>
+<br>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {box-sizing: border-box}
@@ -108,8 +95,8 @@ body {font-family: "Lato", sans-serif;}
 </head>
 <body>
 
-<h2 style="color:red;">Your Clubs</h2>
-<p>Click on the clubs to enter your hours:</p>
+<h2 style="color:red;">Club List</h2>
+<p>Click on the clubs to learn more:</p>
 
 <div class="tab">
 {% for i in range(memberships|length)%}
@@ -124,6 +111,7 @@ body {font-family: "Lato", sans-serif;}
   <p>{{club.desc}}</p>
   </div>
   {% endfor %}
+  
 <script>
 function clubSpot(evt, clubName) {
     var i, tabcontent, tablinks;
@@ -141,4 +129,8 @@ function clubSpot(evt, clubName) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
+     
+
+
 </body>
+</html>
