@@ -99,13 +99,13 @@ body {font-family: "Lato", sans-serif;}
 <p>Click on the clubs to learn more:</p>
 
 <div class="tab">
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
+{% for i in range(clubs|length)%}
+{% set club = clubs[i] %}
  <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
 {% endfor %}
 </div>
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
+{% for i in range(clubs|length)%}
+{% set club = clubs[i] %}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
