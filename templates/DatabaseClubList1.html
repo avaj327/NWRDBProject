@@ -96,13 +96,13 @@ body {font-family: "Lato", sans-serif;}
 <p>Click on the clubs to learn more:</p>
 
 <div class="tab">
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
- <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
+{% for i in range(clublist|length)%}
+{% set club = clublist[i] %}
+ <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}<input type="checkbox" name="memberships" value="{{club.name}}"></button>
 {% endfor %}
 </div>
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
+{% for i in range(clublist|length)%}
+{% set club = clublist[i] %}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
