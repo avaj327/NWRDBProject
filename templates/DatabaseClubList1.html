@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>NWR Club Page</title>
-</head>
-<body style="background-color:powderblue;">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
@@ -35,26 +33,7 @@ body {
   background-color: #4CAF50;
   color: white;
 }
-</style>
-</head>
-<body>
-
-<div class="topnav">
-	<a href= {{url_for('viewUser')}}>Home</a>
-	<a href= {{url_for('clublist')}}>Club List</a>
-	<a href= {{url_for('logout')}}>Logout</a> 
-  <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
-</div>
-
-<h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
- <div style="background-color:#0000ff;color:white;padding:20px;">
-  <p>Here is a list of all the clubs entered in the database.</p>
-  <p>By clicking on a club, you will be given more information about said club, and you can join directly from this page!</p>
-  </div>
-<br>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {box-sizing: border-box}
+	* {box-sizing: border-box}
 body {font-family: "Lato", sans-serif;}
 
 /* Style the tab */
@@ -102,12 +81,26 @@ body {font-family: "Lato", sans-serif;}
 }
 </style>
 </head>
-<body>
+<body style="background-color:powderblue;">
+<form name='testform' method='POST' onsubmit='test.py'>
+<div class="topnav">
+	<a href= {{url_for('viewUser')}}>Home</a>
+	<a href= {{url_for('clublist')}}>Club List</a>
+	<a href= {{url_for('logout')}}>Logout</a> 
+  <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
+</div>
+
+<h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
+ <div style="background-color:#0000ff;color:white;padding:20px;">
+  <p>Here is a list of all the clubs entered in the database.</p>
+  <p>By clicking on a club, you will be given more information about said club, and you can join directly from this page!</p>
+  </div>
+<br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <h2 style="color:red;">Club List</h2>
 <p>Click on the clubs to learn more:</p>
 
-<form name='testform' method='POST' onsubmit='test.py'>
 <div class="tab">
 {% for i in range(clublist|length)%}
 {% set club = clublist[i] %}
@@ -121,8 +114,6 @@ body {font-family: "Lato", sans-serif;}
   <p>{{club.desc}}</p>
   </div>
   {% endfor %}
-<input type='submit' name='submit' value='Submit'>
-</form>
 <script>
 function clubSpot(evt, clubName) {
     var i, tabcontent, tablinks;
@@ -141,8 +132,8 @@ function clubSpot(evt, clubName) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
-     
+    <input type='submit' name='submit' value='Submit'>
 
-
+</form>
 </body>
 </html>
