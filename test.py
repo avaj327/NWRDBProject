@@ -169,7 +169,7 @@ def login():
         user = None
         for row in cur.execute("SELECT * FROM users"):
             if row[0] == username:
-            user = row
+                user = row
                 
         if user == None:
             return render_template(templates["login"], incorrect=True)
