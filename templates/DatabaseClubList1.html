@@ -11,10 +11,12 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 .topnav {
   overflow: hidden;
   background-color: #333;
 }
+
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -23,34 +25,38 @@ body {
   text-decoration: none;
   font-size: 17px;
 }
+
 .topnav a:hover {
   background-color: #ddd;
   color: black;
 }
+
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
 }
 </style>
-
+</head>
+<body>
 
 <div class="topnav">
 	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
 	<a href= {{url_for('logout')}}>Logout</a> 
- <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
+  <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
 </div>
 
-<h1 style="color:red; font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
+<h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
  <div style="background-color:#0000ff;color:white;padding:20px;">
   <p>Here is a list of all the clubs entered in the database.</p>
-  <p>By clicking on a club, you will be given more information about said club. Then by clicking on the check box next to the name, you can join that club!</p>
+  <p>By clicking on a club, you will be given more information about said club, and you can join directly from this page!</p>
   </div>
 <br>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {box-sizing: border-box}
 body {font-family: "Lato", sans-serif;}
+
 /* Style the tab */
 .tab {
     float: left;
@@ -59,6 +65,7 @@ body {font-family: "Lato", sans-serif;}
     width: 30%;
     height: 300px;
 }
+
 /* Style the buttons inside the tab */
 .tab button {
     display: block;
@@ -73,14 +80,17 @@ body {font-family: "Lato", sans-serif;}
     transition: 0.3s;
     font-size: 17px;
 }
+
 /* Change background color of buttons on hover */
 .tab button:hover {
     background-color: #0000ff;
 }
+
 /* Create an active/current "tab button" class */
 .tab button.active {
     background-color: #ff0000;
 }
+
 /* Style the tab content */
 .tabcontent {
     float: left;
@@ -91,24 +101,77 @@ body {font-family: "Lato", sans-serif;}
     height: 300px;
 }
 </style>
+</head>
+<body>
 
 <h2 style="color:red;">Club List</h2>
 <p>Click on the clubs to learn more:</p>
 
 <div class="tab">
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
- <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
-{% endfor %}
+	<button class="tablinks" onclick="clubSpot(event, 'club1')" id="defaultOpen">Interact</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club2')" id="defaultOpen">Leo Club</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club3')" id="defaultOpen">Friends of Rachel</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club4')" id="defaultOpen">National Honor Society</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club5')" id="defaultOpen">Spanish Honor Society</button>
+    	<button class="tablinks" onclick="clubSpot(event, 'club6')" id="defaultOpen">Math Honor Society</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club7')" id="defaultOpen">History Honor Society</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club8')" id="defaultOpen">Student Council</button>
+	<button class="tablinks" onclick="clubSpot(event, 'club9')" id="defaultOpen">Tri-M</button>
 </div>
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
-  <div id="club + {{i}}" class="tabcontent">
-  <h3>{{club.name}}</h3>
-  <p>{{club.desc}}</p>
-  </div>
-  {% endfor %}
-  
+
+<div id="club1" class="tabcontent">
+  <h3>Interact</h3>
+  <p>Interact...</p>
+ <input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club2" class="tabcontent">
+  <h3>LEO Club</h3>
+  <p>description</p>
+  <input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club3" class="tabcontent">
+  <h3>Friends of Rachel</h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club4" class="tabcontent">
+  <h3>National Honor Society</h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club5" class="tabcontent">
+  <h3>Spanish Honor Society</h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club6" class="tabcontent">
+  <h3>Math Honor Society </h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club7" class="tabcontent">
+  <h3>History Honor Society</h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club8" class="tabcontent">
+  <h3>Student Council</h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
+
+<div id="club9" class="tabcontent">
+  <h3>Tri-M </h3>
+  <p>desription.</p>
+	<input type = "button" value="Add Club" name="memberships" onclick='test.py'>
+</div>
 <script>
 function clubSpot(evt, clubName) {
     var i, tabcontent, tablinks;
@@ -123,8 +186,12 @@ function clubSpot(evt, clubName) {
     document.getElementById(clubName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
+     
+
+
 </body>
 </html>

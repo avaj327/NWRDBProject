@@ -45,9 +45,13 @@ def viewDataEntry():
     else:
         return redirect("/login")
 
-@app.route('/clubs')
+@app.route('/clublist', methods=["POST","GET"])
 def clublist():
-	return render_template(templates["clubList"])
+	if (request.method=="POST"):
+		pass
+		
+		
+	return render_template(templates["clubList"], clublist=clubs.getAll())
 
 @app.route('/user/')
 def viewUser():

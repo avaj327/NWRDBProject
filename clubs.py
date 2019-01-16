@@ -28,3 +28,11 @@ class clubs():
 		
 	def __str__(self):
 		return (self.name + ": " + self.desc)
+	
+	#will return a list of all of the registered clubs as club objects
+	def getAll():
+		array = []
+		for key in infoList:
+			array.append(clubs(key))
+			
+		return array
