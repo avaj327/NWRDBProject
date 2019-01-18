@@ -211,7 +211,7 @@ def makeuser():
         userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
         cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
         for userClub in request.form.getlist('memberships'):
-            tableName=str("""CREATE TABLE IF NOT EXISTS """ + request.form['username'] + "~" + str(userClub) + userTableFields)
+            tableName=str("""CREATE TABLE IF NOT EXISTS """ + request.form['username'] + "A" + str(userClub) + userTableFields)
             cur.execute(tableName)
         conn.commit()
         conn.close()
