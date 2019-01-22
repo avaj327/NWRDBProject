@@ -14,10 +14,10 @@ app = Flask(__name__)
 
 templates = {
     "login": "DataBaseLogin1.html",
-        "makeuser": "makeuser.html",
-        "dataEntry": "index.htm",
-        "clubList": "DatabaseClubList1.html",
-        "user": "UserPageDatabase.html"
+    "makeuser": "makeuser.html",
+    "dataEntry": "index.htm",
+    "clubList": "DatabaseClubList1.html",
+    "user": "UserPageDatabase.html"
 }
 
 app.secret_key = "53Da__de39^^w32$5)*8"
@@ -41,7 +41,8 @@ def viewDataEntry():
     if (request.method=="POST"):
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        #cur.execute()
+        entry = [request.form[activity], request.form[hours], int(request.form[approved])]
+        cur.execute("INSERT INTO " + user[0] + "»" + request.form[activity] + " VALUES(?,?,?)", entry)
         conn.commit()
         conn.close()
         return "Sent."
