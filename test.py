@@ -30,11 +30,12 @@ userTableFields = """ (
 
 def fixName (clubName):
     for char in clubName:
-        if char == '-':
-            char = '〰'
-            continue
         if char == '〰':
             char = '-'
+            continue
+        if char == '-':
+            char = '〰'
+
 
 @app.route('/')
 def index():
