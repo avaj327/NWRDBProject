@@ -28,15 +28,6 @@ userTableFields = """ (
     approved integer NOT NULL
     ); """
 
-def fixName (clubName):
-    for char in clubName:
-        if char == '〰':
-            char = '-'
-            continue
-        if char == '-':
-            char = '〰'
-
-
 @app.route('/')
 def index():
     return 'Index Page'
@@ -221,7 +212,7 @@ def makeuser():
         userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
         cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
         for userClub in request.form.getlist('memberships'):
-            fixName(userClub)
+            fixString(userClub, ['-','+','/','*'])
             tableName=str("""CREATE TABLE IF NOT EXISTS """ + request.form['username'] + "»" + str(userClub) + userTableFields)
             cur.execute(tableName)
         conn.commit()
