@@ -47,98 +47,91 @@ def viewDataEntry():
 
 @app.route('/clublist', methods=["POST","GET"])
 def clublist():
+	if not 'user' in session:
+		redirect('/login')
 	if (request.method=="POST"):
 		pass
-		
-		
+	
 	return render_template(templates["clubList"], clublist=clubs.getAll())
+
+def fixString(orig, array, new):
+	for item in array:
+		for i, char in enumerate(orig):
+			if char == item:
+				orig = orig[:i] + new + orig[i+1:]
+	return orig
 
 @app.route('/user/')
 def viewUser():
 	if ('user' in session):
 		user = session['user']
-		username = user[0]
+		username = user[0]	
 		adminLevel = user[2]
+		
+		#temporary arrays that contain bad characters
 		rawMemberships = user[3].split(",")
 		rawAdvisories = user[4].split(",")
 		
-		print ("RAW: " + str(rawMemberships))
+		badChars = [" ", "[", "]", "'", "'"]
 
+		#temporary arrays for parsing bad characters
 		memberships_ = []
 		advisories_ = []
-
 		memberships = []
 		advisories = []
 		
+		#arrays filled with "clubs" objects
 		membershipClubs = []
 		
-		#strip unnecessary characters for memberships
-		for each in rawMemberships:
-			i = 0
-			length = len(each)
-			while i < length:
-				print (each[i])
-				if each[i] == " ":
-					each = each[:i] + each[i+1:]
-				if each[i] == "[":
-					each = each[:i] + each[i+1:]
-				if each[i] == "]":
-					each = each[:i] + each[i+1:]
-				if each[i] == "'":
-					each = each[:i] + each[i+1:]
-				i += 1
-				length = len(each)
-			each = each[:len(each)]
-			memberships_.append(each)
+		try:
+			#strip unnecessary characters for memberships
+			for each in rawMemberships:
+				each = fixString(each, badChars, "")
+				memberships_.append(each)
 			
-		#STUPID JANK FIX FOR END OF ARRAY ']'
-		last = memberships_[len(memberships_)-1]
-		lastLen = len(last)-1
-		if last[lastLen] == "]":
-			last = last[:lastLen]
+			#STUPID JANK FIX FOR END OF ARRAY ']'
+			last = memberships_[len(memberships_)-1]
+			lastLen = len(last)-1
+			if last[lastLen] == "]":
+					last = last[:lastLen]
 		
-		memberships_.pop(len(rawMemberships)-1)
-		memberships_.append(last)
+			memberships_.pop(len(rawMemberships)-1)
+			memberships_.append(last)
+				
+			last = rawMemberships[len(rawMemberships)-1]
+			lastLen = len(last)-1
 			
-		last = rawMemberships[len(rawMemberships)-1]
-		lastLen = len(last)-1
+			#replace '_' with spaces for memberships
+			for each in memberships_: 
+				each = fixString(each, ["_"], " ")
+				memberships.append(each)
+		except: #in the case of errors parsing club names, fall back to saying no clubs
+			memberships.append("None")
+
+		try:
+			#strip unnecessary characters for advisories
+			for each in rawAdvisories:
+				each = fixString(each, badChars, "")
+				advisories_.append(each)
 			
-		#replace '_' with spaces for memberships
-		for each in memberships_: 
-			for i in range(len(each)-1):
-				if i < len(each):
-					if each[i] == "_":
-						each = each[:i] + " " + each[i+1:]
-			each = each[:len(each)]
-			memberships.append(each)
-
-		#strip unnecessary characters for advisories
-		for each in rawAdvisories:
-			i = 0
-			length = len(each)-1
-			while i <= length:
-				print (each[i])
-				if each[i] == " ":
-					each = each[:i] + each[i+1:]
-				if each[i] == "[":
-					each = each[:i] + each[i+1:]
-				if each[i] == "]":
-					each = each[:i] + each[i+1:]
-				if each[i] == "'":
-					each = each[:i] + each[i+1:]
-				i += 1
-				length = len(each)-1
-			each = each[:len(each)]
-			advisories_.append(each)
-
-		#replace '_' with spaces for advisories
-		for each in advisories_: 
-			for i in range(len(each)-1):
-				if i < len(each):
-					if each[i] == "_":
-						each = each[:i] + " " + each[i+1:]
-			each = each[:len(each)]
-			advisories.append(each)
+			#STUPID JANK FIX FOR END OF ARRAY ']'
+			last = advisories_[len(advisories_)-1]
+			lastLen = len(last)-1
+			if last[lastLen] == "]":
+					last = last[:lastLen]
+		
+			advisories_.pop(len(rawAdvisories)-1)
+			advisories_.append(last)
+				
+			last = rawAdvisories[len(rawAdvisories)-1]
+			lastLen = len(last)-1
+			
+			#replace '_' with spaces for advisories
+			for each in advisories_: 
+				each = fixString(each, ["_"], " ")
+				advisories.append(each)
+		except: #in the case of errors parsing club names, fall back to saying no advisories
+			advisories.append("None")
 
 		#create membership club array from membership string array
 		for each in memberships:
