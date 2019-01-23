@@ -20,6 +20,8 @@ templates = {
     "user": "UserPageDatabase.html"
 }
 
+pointer = "»"
+
 app.secret_key = "53Da__de39^^w32$5)*8"
 
 userTableFields = """ (
@@ -27,6 +29,14 @@ userTableFields = """ (
     hours integer NOT NULL,
     approved integer NOT NULL
     ); """
+
+def fixName (clubName):
+    for char in clubName:
+        if char == '-':
+            char = '〰'
+            continue
+        if char == '〰':
+            char = '-'
 
 @app.route('/')
 def index():
@@ -41,8 +51,8 @@ def viewDataEntry():
     if (request.method=="POST"):
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [request.form[activity], request.form[hours], int(request.form[approved])]
-        cur.execute("INSERT INTO " + user[0] + "»" + request.form[activity] + " VALUES(?,?,?)", entry)
+        entry = [user[0] + pointer + request.form[activity], int(request.form[activity]), request.form[hours], int(request.form[approved])]
+        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
         conn.commit()
         conn.close()
         return "Sent."
@@ -211,10 +221,10 @@ def makeuser():
         cur = conn.cursor()
         userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
         cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
-        for userClub in request.form.getlist('memberships'):
-            fixString(userClub, ['-','+','/','*'])
-            tableName=str("""CREATE TABLE IF NOT EXISTS """ + request.form['username'] + "»" + str(userClub) + userTableFields)
-            cur.execute(tableName)
+        """for userClub in request.form.getlist('memberships'):
+            fixName(userClub)
+            tableName=str('CREATE TABLE IF NOT EXISTS' + request.form['username'] + "»" + str(userClub) + userTableFields)
+            cur.execute(tableName)"""
         conn.commit()
         conn.close()
         return "Sent."
