@@ -104,7 +104,7 @@ body {font-family: "Lato", sans-serif;}
 <div class="tab">
 {% for i in range(clublist|length)%}
 {% set club = clublist[i] %}
- <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}<input type="checkbox" name="memberships" value="{{club.name}}"></button>
+ <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
 {% endfor %}
 </div>
 {% for i in range(clublist|length)%}
@@ -112,6 +112,7 @@ body {font-family: "Lato", sans-serif;}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
+   Click this button to add the club to your ClubList: <input type = "button" value="{{club.name}}" name="memberships" onclick='?add={{club.name}}'>
   </div>
   {% endfor %}
 <script>
