@@ -44,7 +44,18 @@ body {font-family: "Lato", sans-serif;}
     width: 30%;
     height: 300px;
 }
-
+.button {
+  background-color: blue;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 /* Style the buttons inside the tab */
 .tab button {
     display: block;
@@ -109,9 +120,9 @@ body {font-family: "Lato", sans-serif;}
 {% for i in range(clublist|length)%}
 {% set club = clublist[i] %}
   <div id="club + {{i}}" class="tabcontent">
-  <h3>{{club.name}}</h3>
+  <input type = "button" class="button" value="{{club.name}}" name="memberships" onclick='?add={{club.name}}'> Click here!
   <p>{{club.desc}}</p>
-   Click this button to add the club to your ClubList: <input type = "button" value="{{club.name}}" name="memberships" onclick='?add={{club.name}}'>
+   Click the name of the club to add it to your clublist!
   </div>
   {% endfor %}
 <script>
