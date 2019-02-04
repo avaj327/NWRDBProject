@@ -37,6 +37,8 @@ class clubs():
 		global infoList
 		array = []
 		for key in infoList:
+			if key == "None":
+				continue
 			array.append(clubs(key))
 			
 		return array
