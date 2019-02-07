@@ -10,6 +10,7 @@ from flask import Flask, request, render_template, session, redirect
 import sqlite3
 from passlib.hash import sha256_crypt
 from clubs import clubs
+import re
 app = Flask(__name__)
 
 templates = {
@@ -17,7 +18,8 @@ templates = {
     "makeuser": "makeuser.html",
     "dataEntry": "index.htm",
     "clubList": "DatabaseClubList1.html",
-    "user": "UserPageDatabase.html"
+    "user": "UserPageDatabase.html",
+    "dummy": "dummy.html"
 }
 
 pointer = "»"
@@ -33,11 +35,11 @@ userTableFields = """ (
 def fixName (clubName):
     for char in clubName:
         if char == '-':
-            char = '〰'
+            re.sub('-','〰', clubName)
             continue
         if char == '〰':
-            char = '-'
-
+            re.sub('〰', '-', clubName)
+4
 @app.route('/')
 def index():
     return 'Index Page'
@@ -46,12 +48,19 @@ def index():
 def hello():
     return 'Hello, World'
 
+@app.route('/dummy')
+def (viewDummy):
+    if request.args.get('url_button') == 'loadit':
+        return 'It worked!'
+    else:
+        return render_template(templates["dummy"])
+
 @app.route('/dataEntry/', methods=["POST", "GET"])
 def viewDataEntry():
     if (request.method=="POST"):
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [session['user'][0] + pointer + 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
+        entry = [user[0] + pointer + 'PLACEHOLDER', request.form[activity], int(request.form[hours]), int(request.form[approved])]
         cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
         conn.commit()
         conn.close()
