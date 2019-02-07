@@ -49,7 +49,7 @@ def hello():
     return 'Hello, World'
 
 @app.route('/dummy')
-def (viewDummy):
+def viewDummy ():
     if request.args.get('url_button') == 'loadit':
         return 'It worked!'
     else:
