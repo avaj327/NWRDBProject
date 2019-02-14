@@ -74,21 +74,21 @@ def clublist():
 def viewUser():
     if ('user' in session):
         user = session['user']
-        username = user[0]
+        username = user[0] #SEAN ES MUY STUPIDO
         adminLevel = user[2]
         rawMemberships = user[3].split(",")
         rawAdvisories = user[4].split(",")
-                
+
         print ("RAW: " + str(rawMemberships))
-                
+
         memberships_ = []
         advisories_ = []
-                
+
         memberships = []
         advisories = []
-                
+
         membershipClubs = []
-                
+
         #strip unnecessary characters for memberships
         for each in rawMemberships:
             i = 0
@@ -107,19 +107,19 @@ def viewUser():
                 length = len(each)
             each = each[:len(each)]
             memberships_.append(each)
-        
+
         #STUPID JANK FIX FOR END OF ARRAY ']'
         last = memberships_[len(memberships_)-1]
         lastLen = len(last)-1
         if last[lastLen] == "]":
             last = last[:lastLen]
-            
+
         memberships_.pop(len(rawMemberships)-1)
         memberships_.append(last)
-                
+
         last = rawMemberships[len(rawMemberships)-1]
         lastLen = len(last)-1
-                
+
         #replace '_' with spaces for memberships
         for each in memberships_:
             for i in range(len(each)-1):
@@ -128,7 +128,7 @@ def viewUser():
                         each = each[:i] + " " + each[i+1:]
             each = each[:len(each)]
             memberships.append(each)
-                
+
         #strip unnecessary characters for advisories
         for each in rawAdvisories:
             i = 0
@@ -147,7 +147,7 @@ def viewUser():
                 length = len(each)-1
             each = each[:len(each)]
             advisories_.append(each)
-    
+
         #replace '_' with spaces for advisories
         for each in advisories_:
             for i in range(len(each)-1):
@@ -156,12 +156,12 @@ def viewUser():
                         each = each[:i] + " " + each[i+1:]
             each = each[:len(each)]
             advisories.append(each)
-            
+
         #create membership club array from membership string array
         for each in memberships:
             club = clubs(each)
             membershipClubs.append(club)
-                
+
         return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=membershipClubs,advisories=advisories)
     else:
         return redirect('/login')
@@ -181,15 +181,15 @@ def login():
         for row in cur.execute("SELECT * FROM users"):
             if row[0] == username:
                 user = row
-                
+
         if user == None:
             return render_template(templates["login"], incorrect=True)
-                
+
         if (sha256_crypt.verify(password, user[1]) == True):
             session['user'] = user
         else:
             return render_template(templates["login"], incorrect=True)
-                
+
         return redirect('/user')
     else:
         return render_template(templates["login"], incorrect=False)
@@ -199,7 +199,7 @@ def userlist():
     conn = sqlite3.connect('database.db')
     cur = conn.cursor()
     users = cur.execute("SELECT * FROM users")
-        
+
     names=[]
     passwords=[]
     levels=[]
@@ -211,7 +211,7 @@ def userlist():
         levels.append(row[2])
         memberships.append(row[3])
         advisories.append(row[4])
-        
+
     return render_template('userlist.html', names=names, passwords=passwords, levels=levels, memberships=memberships, advisories=advisories)
 
 @app.route('/makeuser', methods=["POST", "GET"])
