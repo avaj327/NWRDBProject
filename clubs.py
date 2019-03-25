@@ -8,6 +8,8 @@ Created on Fri Dec 14 12:30:03 2018
 
 class clubs():
 	global infoList
+	global entries
+	entries = []
 	infoList  = {
 		"None": "You have no clubs! Go to the club list to join some!",
 		"Interact": "Description for Interact",
@@ -20,7 +22,7 @@ class clubs():
 		"Student Council": "Description for Student Council",
 		"Tri-M": "Description for Tri-M",
 		}
-	
+
 	def __init__(self, name):
 		global infoList
 		self.name = name
@@ -28,10 +30,18 @@ class clubs():
 			self.desc = infoList[name]
 		else:
 			self.desc = "Club not found."
-		
+
 	def __str__(self):
 		return (self.name + ": " + self.desc)
-	
+
+	def getEntries():
+		global entries
+		return entries
+
+	def addEntry(entry):
+		global entries
+		entries.append(entry)
+
 	#will return a list of all of the registered clubs as club objects
 	def getAll():
 		global infoList
@@ -40,5 +50,5 @@ class clubs():
 			if key == "None":
 				continue
 			array.append(clubs(key))
-			
+
 		return array

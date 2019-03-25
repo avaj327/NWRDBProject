@@ -1,10 +1,9 @@
-
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-    Created on Mon Nov  5 00:06:53 2018
-    @author: Tyler Johnson and Sean Pergola
-    """
+Created on Mon Nov  5 00:06:53 2018
+@author: Tyler Johnson and Sean Pergola
+"""
 
 from flask import Flask, request, render_template, session, redirect
 import sqlite3
@@ -47,12 +46,12 @@ def hello():
     return 'Hello, World'
 
 @app.route('/dataEntry/', methods=["POST", "GET"])
-def viewDataEntry():
+def dataEntry():
     if (request.method=="POST"):
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [session['user'][0], 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
-        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?,?)", entry)
+        entry = [session['user'][0] + pointer + 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
+        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
         conn.commit()
         conn.close()
         return "Sent."
@@ -62,6 +61,10 @@ def viewDataEntry():
         return render_template(templates["dataEntry"], username=username)
     else:
         return redirect("/login")
+
+@app.route('/viewEntries/')
+def viewEntries():
+	pass #TODO: Implement view entries table (like view user table)
 
 @app.route('/clubs', methods=["POST", "GET"])
 def clublist():
@@ -221,10 +224,10 @@ def makeuser():
         cur = conn.cursor()
         userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
         cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
-        """for userClub in request.form.getlist('memberships'):
-            fixName(userClub)
-            tableName=str('CREATE TABLE IF NOT EXISTS' + request.form['username'] + "»" + str(userClub) + userTableFields)
-            cur.execute(tableName)"""
+        #for userClub in request.form.getlist('memberships'):
+        #    fixName(userClub)
+        #    tableName=str('CREATE TABLE IF NOT EXISTS' + request.form['username'] + "»" + str(userClub) + userTableFields)
+        #    cur.execute(tableName)
         conn.commit()
         conn.close()
         return "Sent."
