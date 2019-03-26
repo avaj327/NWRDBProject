@@ -60,7 +60,7 @@ def viewDataEntry():
     if (request.method=="POST"):
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [user[0] + pointer + 'PLACEHOLDER', request.form[activity], int(request.form[hours]), int(request.form[approved])]
+        entry = [user[0], 'PLACEHOLDER', request.form[activity], int(request.form[hours]), int(request.form[approved])]
         cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
         conn.commit()
         conn.close()
@@ -75,7 +75,7 @@ def viewDataEntry():
 @app.route('/clubs', methods=["POST", "GET"])
 def clublist():
     if (request.method=="POST"):
-        pass#TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
+        pass#TODO: On POST, use URL paramater to add club to membership list
     else:
         return render_template(templates["clubList"])
 
