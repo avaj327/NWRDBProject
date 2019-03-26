@@ -46,12 +46,13 @@ def hello():
     return 'Hello, World'
 
 @app.route('/dataEntry/', methods=["POST", "GET"])
-def dataEntry():
+def viewDataEntry():
     if (request.method=="POST"):
+        user = session['user']
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [session['user'][0] + pointer + 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
-        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
+        entry = [user[0], 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
+        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?,?)", entry)
         conn.commit()
         conn.close()
         return "Sent."
