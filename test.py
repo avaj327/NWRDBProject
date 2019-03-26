@@ -58,6 +58,7 @@ def viewDummy ():
 @app.route('/dataEntry/', methods=["POST", "GET"])
 def viewDataEntry():
     if (request.method=="POST"):
+        user = session['user']
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         entry = [user[0], 'PLACEHOLDER', request.form[activity], int(request.form[hours]), int(request.form[approved])]
