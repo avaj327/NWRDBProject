@@ -45,7 +45,7 @@ def index():
 def hello():
     return 'Hello, World'
 
-@app.route('/dataEntry/', methods=["POST", "GET"])
+@app.route('/dataentry/', methods=["POST", "GET"])
 def dataEntry():
     if (request.method=="POST"):
         conn = sqlite3.connect('database.db')
