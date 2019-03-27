@@ -51,7 +51,7 @@ def viewDataEntry():
         user = session['user']
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [user[0], 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
+        entry = [user[0], request.form['club'], request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
         cur.execute("INSERT INTO userEntries VALUES(?,?,?,?,?)", entry)
         conn.commit()
         conn.close()
