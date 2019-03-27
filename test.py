@@ -45,7 +45,7 @@ def index():
 def hello():
     return 'Hello, World'
 
-@app.route('/dataEntry/', methods=["POST", "GET"])
+@app.route('/dataentry/', methods=["POST", "GET"])
 def viewDataEntry():
     if (request.method=="POST"):
         user = session['user']
