@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>User List</title>
+		<style>
+			.center{
+				text-align:center;
+			}
+			td{
+				padding:5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div id='container'>
+		<table>
+			<tr>
+				<td class='center'>Username<hr></td>
+				<td class='center'>Club<hr></td>
+				<td class='center'>Activities<hr></td>
+				<td class='center'>Hours<hr></td>
+				<td class='center'>Approved<hr></td>
+			</tr>
+			<tr>
+				<td>{%for name in names%}{{name}}<br><hr>{%endfor%}</td>
+				<td>{%for club in clubs%}{{club}}<br><hr>{%endfor%}</td>
+				<td>{%for activity in activities%}{{activity}}<br><hr>{%endfor%}</td>
+				<td>{%for hour in hours%}{{hour}}<br><hr>{%endfor%}</td>
+				<td>{%for appr in approved%}{{appr}}<br><hr>{%endfor%}</td>
+			</tr>
+		</table>
+	</div>
+	</body>
+</html>
