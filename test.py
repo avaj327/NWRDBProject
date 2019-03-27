@@ -46,13 +46,12 @@ def hello():
     return 'Hello, World'
 
 @app.route('/dataEntry/', methods=["POST", "GET"])
-def viewDataEntry():
+def dataEntry():
     if (request.method=="POST"):
-        user = session['user']
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        entry = [user[0], request.form['club'], request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
-        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?,?)", entry)
+        entry = [session['user'][0] + pointer + 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
+        cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
         conn.commit()
         conn.close()
         return "Sent."
@@ -65,7 +64,25 @@ def viewDataEntry():
 
 @app.route('/viewEntries/')
 def viewEntries():
-	pass #TODO: Implement view entries table (like view user table)
+	conn = sqlite3.connect('database.db')
+	cur = conn.cursor()
+	users = cur.execute("SELECT * FROM userEntries")
+
+	names=[]
+	club=[]
+	activity=[]
+	hours=[]
+	approved=[]
+	for row in users:
+		names.append(row[0])
+		club.append(row[1])
+		activity.append(row[2])
+		hours.append(row[3])
+		approved.append(row[4])
+
+	return render_template('entrylist.html', names=names, clubs=club, activities=activity, hours=hours, approved=approved)
+
+
 
 @app.route('/clubs', methods=["POST", "GET"])
 def clublist():
