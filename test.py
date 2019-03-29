@@ -63,7 +63,7 @@ def dataEntry():
 	else:
 		return redirect("/login")
 
-@app.route('/viewEntries/')
+@app.route('/entrylist/')
 def viewEntries():
 	conn = sqlite3.connect('database.db')
 	cur = conn.cursor()
@@ -100,8 +100,7 @@ def viewUser():
 		adminLevel = user[2]
 		rawMemberships = user[3].split(",")
 		rawAdvisories = user[4].split(",")
-
-		print ("RAW: " + str(rawMemberships))
+		entries = session['entries']
 
 		memberships_ = []
 		advisories_ = []
@@ -116,7 +115,6 @@ def viewUser():
 			i = 0
 			length = len(each)
 			while i < length:
-				print (each[i])
 				if each[i] == " ":
 					each = each[:i] + each[i+1:]
 				if each[i] == "[":
@@ -156,7 +154,6 @@ def viewUser():
 			i = 0
 			length = len(each)-1
 			while i <= length:
-				print (each[i])
 				if each[i] == " ":
 					each = each[:i] + each[i+1:]
 				if each[i] == "[":
@@ -182,6 +179,10 @@ def viewUser():
 		#create membership club array from membership string array
 		for each in memberships:
 			club = clubs(each)
+			for entry in entries:
+				if club.name == entry[1]:
+					club.addEntry(entry)
+
 			membershipClubs.append(club)
 
 		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=membershipClubs,advisories=advisories)
@@ -206,9 +207,15 @@ def login():
 
 		if user == None:
 			return render_template(templates["login"], incorrect=True)
+		else:
+			entries = []
+			for i,row in enumerate(cur.execute("SELECT * FROM userEntries")):
+				if row[0] == username:
+					entries.append(row)
 
 		if (sha256_crypt.verify(password, user[1]) == True):
 			session['user'] = user
+			session['entries'] = entries
 		else:
 			return render_template(templates["login"], incorrect=True)
 
