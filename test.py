@@ -48,7 +48,7 @@ def hello():
 @app.route('/dataentry/', methods=["POST", "GET"])
 def dataEntry():
 	if (request.method=="POST"):
-	user = session['user']
+		user = session['user']
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
 		entry = [session['user'][0], request.form['club'], request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
@@ -90,7 +90,7 @@ def clublist():
 	if (request.method=="POST"):
 		pass#TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
 	else:
-		return render_template(templates["clubList"])
+		return render_template(templates["clubList"], clublist=clubs.getAll())
 
 @app.route('/user/')
 def viewUser():
