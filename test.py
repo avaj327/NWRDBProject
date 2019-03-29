@@ -48,10 +48,11 @@ def hello():
 @app.route('/dataentry/', methods=["POST", "GET"])
 def dataEntry():
 	if (request.method=="POST"):
+	user = session['user']
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
-		entry = [session['user'][0] + pointer + 'PLACEHOLDER', request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
-		cur.execute("INSERT INTO userEntries VALUES(?,?,?,?)", entry)
+		entry = [session['user'][0], request.form['club'], request.form['activity'], int(request.form['hours']), int(request.form['approved'])]
+		cur.execute("INSERT INTO userEntries VALUES(?,?,?,?,?)", entry)
 		conn.commit()
 		conn.close()
 		return "Sent."
@@ -183,9 +184,6 @@ def viewUser():
 					club.addEntry(entry)
 
 			membershipClubs.append(club)
-
-
-
 
 		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=membershipClubs,advisories=advisories)
 	else:
