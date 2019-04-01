@@ -34,15 +34,16 @@ class clubs():
 	def __str__(self):
 		return (self.name + ": " + self.desc)
 
-	def getEntries():
+	def getEntries(self):
 		global entries
 		return entries
 
-	def addEntry(entry):
+	def addEntry(self, entry):
 		global entries
 		entries.append(entry)
 
 	#will return a list of all of the registered clubs as club objects
+	@staticmethod
 	def getAll():
 		global infoList
 		array = []
