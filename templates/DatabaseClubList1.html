@@ -121,8 +121,8 @@ body {font-family: "Lato", sans-serif;}
 {% set club = clublist[i] %}
   <div id="club + {{i}}" class="tabcontent">
   <input type = "button" class="button" value="{{club.name}}" name="memberships" onclick='?add={{club.name}}'> Click here!
-  <p>{{club.desc}}</p>
    Click the name of the club to add it to your clublist!
+  <p>{{club.desc}}</p>
   </div>
   {% endfor %}
 <script>
