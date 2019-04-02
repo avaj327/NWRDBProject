@@ -130,17 +130,26 @@ body {font-family: "Lato", sans-serif;}
 		</fieldset>
 		</form>
 	<br>
-	{% for i in range()%}
-{% set club =  %}
-  <table border=yes cellpadding="6">
+	<table border=yes cellpadding="6">
 	<tr>
-		<td>{{club.activity}}</td>
-		<td>{{club.hour}}</td>
-		<td>{{club.approved}}</td>
+		<td>Activity</td>
+		<td>Hours</td>
+		<td>Approved</td>
+	<tr>
+	{% for entry in range(club.getEntries|length)%}
+	<tr>
+		<td>{{entry[2]}}</td>
+		<td>{{entry[3]}}</td>
+	{% if entry[4] == 1 %}
+		<td>Yes</td>
+	{% endif %}
+	{% if entry[4] == 0 %}
+		<td>No<td>
+	{% endif %}
 	</tr>
 </table>
 {% endfor %}
-Total Hours: {{hours}}
+Total Hours: {{getTotalHours}}
   </div>
   {% endfor %}
  
