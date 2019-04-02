@@ -193,7 +193,7 @@ def viewUser():
 def viewAdmin():
 	if 'user' in session:
 		user = session['user']
-		if len(user[4]) != 0:
+		if user[2] != 0:
 			return 'Hello, admin'
 		else:
 			return 'ERROR: No admin capabilities found!'
