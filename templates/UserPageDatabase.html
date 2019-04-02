@@ -134,9 +134,9 @@ body {font-family: "Lato", sans-serif;}
 	<tr>
 		<td>Activity</td>
 		<td>Hours</td>
-		<td>Approved</td>
+		<td>Approved y/n</td>
 	<tr>
-	{% for entry in range(club.getEntries()|length)%}
+	{% for entry in range(club.entries|length)%}
 	<tr>
 		<td>{{entry[2]}}</td>
 		<td>{{entry[3]}}</td>
@@ -149,7 +149,7 @@ body {font-family: "Lato", sans-serif;}
 	</tr>
 </table>
 {% endfor %}
-Total Hours: {{getTotalHours}}
+Total Hours: {{totalHours}}
   </div>
   {% endfor %}
  
