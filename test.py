@@ -92,7 +92,7 @@ def clublist():
 	else:
 		return render_template(templates["clubList"], clublist=clubs.getAll())
 
-@app.route('/user/')
+@app.route('/user/', methods=["POST","GET"])
 def viewUser():
 	if ('user' in session):
 		user = session['user']
@@ -270,6 +270,10 @@ def makeuser():
 		return "Sent."
 	else:
 		return render_template(templates["makeuser"])
+
+@app.errorhandler(404)
+def fourohfour(e):
+
 
 @app.route('/logout')
 def logout():
