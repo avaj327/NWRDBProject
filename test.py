@@ -273,7 +273,7 @@ def makeuser():
 
 @app.errorhandler(404)
 def fourohfour(e):
-
+	pass
 
 @app.route('/logout')
 def logout():
