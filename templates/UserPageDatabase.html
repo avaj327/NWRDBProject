@@ -136,7 +136,7 @@ body {font-family: "Lato", sans-serif;}
 		<td>Hours</td>
 		<td>Approved</td>
 	<tr>
-	{% for entry in range(club.getEntries|length)%}
+	{% for entry in range(club.getEntries()|length)%}
 	<tr>
 		<td>{{entry[2]}}</td>
 		<td>{{entry[3]}}</td>
