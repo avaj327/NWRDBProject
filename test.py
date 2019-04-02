@@ -189,6 +189,17 @@ def viewUser():
 	else:
 		return redirect('/login')
 
+@app.route('/admin')
+def viewAdmin():
+	if 'user' in session:
+		user = session['user']
+		if len(user[4]) != 0:
+			return 'Hello, admin'
+		else:
+			return 'ERROR: No admin capabilities found!'
+	else:
+		return redirect('/login')
+
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')

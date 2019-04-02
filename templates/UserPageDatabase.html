@@ -122,37 +122,8 @@ body {font-family: "Lato", sans-serif;}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
-  		<form name='testform' method='POST' onsubmit='test.py'>
-		<fieldset>
-			Activity participated in: <input type='textbox' name='activity' style="margin:10px; width:260px"> 
-			Hours spent on activity: <input type='textbox' name='hour' style="margin:10px; width:200px"><br><br>
-			<input type='submit' name='submit' value='Submit'>
-		</fieldset>
-		</form>
-	<br>
-	<table border=yes cellpadding="6">
-	<tr>
-		<td>Activity</td>
-		<td>Hours</td>
-		<td>Approved y/n</td>
-	<tr>
-	{% for entry in range(club.entries|length)%}
-	<tr>
-		<td>{{entry[2]}}</td>
-		<td>{{entry[3]}}</td>
-	{% if entry[4] == 1 %}
-		<td>Yes</td>
-	{% endif %}
-	{% if entry[4] == 0 %}
-		<td>No<td>
-	{% endif %}
-	</tr>
-</table>
-{% endfor %}
-Total Hours: {{totalHours}}
   </div>
   {% endfor %}
- 
 <script>
 function clubSpot(evt, clubName) {
     var i, tabcontent, tablinks;
