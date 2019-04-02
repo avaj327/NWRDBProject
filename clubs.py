@@ -38,6 +38,11 @@ class clubs():
 		global entries
 		return entries
 
+	def getTotalHours(self):
+		for entry in entries:
+			total += int(entry[2])
+		return total
+
 	def addEntry(self, entry):
 		global entries
 		entries.append(entry)
