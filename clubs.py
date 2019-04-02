@@ -36,7 +36,7 @@ class clubs():
 
 	def addEntry(self, entry):
 		self.entries.append(entry)
-		self.totalHours += int(entry[2])
+		self.totalHours += int(entry[3])
 
 	#will return a list of all of the registered clubs as club objects
 	@staticmethod
