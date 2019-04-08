@@ -9,6 +9,7 @@ from flask import Flask, request, render_template, session, redirect
 import sqlite3
 from passlib.hash import sha256_crypt
 from clubs import clubs
+#TODO https://stackoverflow.com/questions/21498694/flask-get-current-route/21498747
 app = Flask(__name__)
 
 templates = {
@@ -110,71 +111,73 @@ def viewUser():
 
 		membershipClubs = []
 
-		#strip unnecessary characters for memberships
-		for each in rawMemberships:
-			i = 0
-			length = len(each)
-			while i < length:
-				if each[i] == " ":
-					each = each[:i] + each[i+1:]
-				if each[i] == "[":
-					each = each[:i] + each[i+1:]
-				if each[i] == "]":
-					each = each[:i] + each[i+1:]
-				if each[i] == "'":
-					each = each[:i] + each[i+1:]
-				i += 1
+		if rawMemberships != []:
+			#strip unnecessary characters for memberships
+			for each in rawMemberships:
+				i = 0
 				length = len(each)
-			each = each[:len(each)]
-			memberships_.append(each)
+				while i < length:
+					if each[i] == " ":
+						each = each[:i] + each[i+1:]
+					if each[i] == "[":
+						each = each[:i] + each[i+1:]
+					if each[i] == "]":
+						each = each[:i] + each[i+1:]
+					if each[i] == "'":
+						each = each[:i] + each[i+1:]
+					i += 1
+					length = len(each)
+				each = each[:len(each)]
+				memberships_.append(each)
 
-		#STUPID JANK FIX FOR END OF ARRAY ']'
-		last = memberships_[len(memberships_)-1]
-		lastLen = len(last)-1
-		if last[lastLen] == "]":
-			last = last[:lastLen]
+			#STUPID JANK FIX FOR END OF ARRAY ']'
+			last = memberships_[len(memberships_)-1]
+			lastLen = len(last)-1
+			if last[lastLen] == "]":
+				last = last[:lastLen]
 
-		memberships_.pop(len(rawMemberships)-1)
-		memberships_.append(last)
+			memberships_.pop(len(rawMemberships)-1)
+			memberships_.append(last)
 
-		last = rawMemberships[len(rawMemberships)-1]
-		lastLen = len(last)-1
+			last = rawMemberships[len(rawMemberships)-1]
+			lastLen = len(last)-1
 
-		#replace '_' with spaces for memberships
-		for each in memberships_:
-			for i in range(len(each)-1):
-				if i < len(each):
-					if each[i] == "_":
-						each = each[:i] + " " + each[i+1:]
-			each = each[:len(each)]
-			memberships.append(each)
+			#replace '_' with spaces for memberships
+			for each in memberships_:
+				for i in range(len(each)-1):
+					if i < len(each):
+						if each[i] == "_":
+							each = each[:i] + " " + each[i+1:]
+				each = each[:len(each)]
+				memberships.append(each)
 
-		#strip unnecessary characters for advisories
-		for each in rawAdvisories:
-			i = 0
-			length = len(each)-1
-			while i <= length:
-				if each[i] == " ":
-					each = each[:i] + each[i+1:]
-				if each[i] == "[":
-					each = each[:i] + each[i+1:]
-				if each[i] == "]":
-					each = each[:i] + each[i+1:]
-				if each[i] == "'":
-					each = each[:i] + each[i+1:]
-				i += 1
+		if rawAdvisories != []:
+			#strip unnecessary characters for advisories
+			for each in rawAdvisories:
+				i = 0
 				length = len(each)-1
-			each = each[:len(each)]
-			advisories_.append(each)
+				while i <= length:
+					if each[i] == " ":
+						each = each[:i] + each[i+1:]
+					if each[i] == "[":
+						each = each[:i] + each[i+1:]
+					if each[i] == "]":
+						each = each[:i] + each[i+1:]
+					if each[i] == "'":
+						each = each[:i] + each[i+1:]
+					i += 1
+					length = len(each)-1
+				each = each[:len(each)]
+				advisories_.append(each)
 
-		#replace '_' with spaces for advisories
-		for each in advisories_:
-			for i in range(len(each)-1):
-				if i < len(each):
-					if each[i] == "_":
-						each = each[:i] + " " + each[i+1:]
-			each = each[:len(each)]
-			advisories.append(each)
+			#replace '_' with spaces for advisories
+			for each in advisories_:
+				for i in range(len(each)-1):
+					if i < len(each):
+						if each[i] == "_":
+							each = each[:i] + " " + each[i+1:]
+				each = each[:len(each)]
+				advisories.append(each)
 
 		#create membership club array from membership string array
 		for each in memberships:
@@ -259,7 +262,7 @@ def makeuser():
 	if (request.method=="POST"):
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
-		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), str(request.form.getlist('advisories'))]
+		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), "none"]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		#for userClub in request.form.getlist('memberships'):
 		#    fixName(userClub)
@@ -273,7 +276,10 @@ def makeuser():
 
 @app.errorhandler(404)
 def fourohfour(e):
-	pass
+	test = request.path
+	print (test)
+
+	return("404")
 
 @app.route('/logout')
 def logout():
