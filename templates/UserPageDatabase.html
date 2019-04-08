@@ -137,20 +137,19 @@ body {font-family: "Lato", sans-serif;}
 		<td>Hours</td>
 		<td>Approved y/n</td>
 	<tr/>
-	{% for entry in range(club.entries|length)%}
+	{% for j in range(clublist[i].entries)%}
 	<tr>
-		<td>{{entry[2]}}</td>
-		<td>{{entry[3]}}</td>
-	{% if entry[4] == 1 %}
+		<td>{{clublist[i].entries[j][2]}}</td>
+		<td>{{clublist[i].entries[j][3]}}</td>
+	{% if clublist[i].entries[j][4] == 1 %}
 		<td>Yes</td>
 	{% endif %}
-	{% if entry[4] == 0 %}
+	{% if clublist[i].entries[j][4] == 0 %}
 		<td>No<td>
 	{% endif %}
 	</tr>
 </table>
 {% endfor %}
-Total Hours: {{totalHours}}
   </div>
   {% endfor %}
  
@@ -173,4 +172,5 @@ document.getElementById("defaultOpen").click();
 </script>
 
 
-</body
+</body>
+</html>
