@@ -137,14 +137,14 @@ body {font-family: "Lato", sans-serif;}
 		<td>Hours</td>
 		<td>Approved y/n</td>
 	<tr/>
-	{% for j in range(clublist[i].entries)%}
+	{% for j in range(club.entries|length)%}
 	<tr>
-		<td>{{clublist[i].entries[j][2]}}</td>
-		<td>{{clublist[i].entries[j][3]}}</td>
-	{% if clublist[i].entries[j][4] == 1 %}
+		<td>{club.entries[j][2]}}</td>
+		<td>{{club.entries[j][3]}}</td>
+	{% if club.entries[j][4] == 1 %}
 		<td>Yes</td>
 	{% endif %}
-	{% if clublist[i].entries[j][4] == 0 %}
+	{% if club.entries[j][4] == 0 %}
 		<td>No<td>
 	{% endif %}
 	</tr>
