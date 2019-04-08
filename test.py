@@ -111,7 +111,7 @@ def viewUser():
 
 		membershipClubs = []
 
-		if rawMemberships != []:
+		if rawMemberships != '[]':
 			#strip unnecessary characters for memberships
 			for each in rawMemberships:
 				i = 0
@@ -151,7 +151,7 @@ def viewUser():
 				each = each[:len(each)]
 				memberships.append(each)
 
-		if rawAdvisories != []:
+		if rawAdvisories != '[]':
 			#strip unnecessary characters for advisories
 			for each in rawAdvisories:
 				i = 0
