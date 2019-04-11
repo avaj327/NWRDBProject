@@ -17,7 +17,8 @@ templates = {
 	"makeuser": "makeuser.html",
 	"dataEntry": "index.htm",
 	"clubList": "DatabaseClubList1.html",
-	"user": "UserPageDatabase.html"
+	"user": "UserPageDatabase.html",
+	"404": "errorpage404.html"
 }
 
 pointer = "»"
@@ -277,9 +278,11 @@ def makeuser():
 @app.errorhandler(404)
 def fourohfour(e):
 	test = request.path
-	print (test)
+	for tempurl in app.url_map.iter_rules():
+		if str.lower(test) == str.lower(str(tempurl)):
+			return redirect(url_for(str(tempurl)[1:]))
 
-	return("404")
+	return(render_template(templates["404"]), url=str(tempurl))
 
 @app.route('/logout')
 def logout():
