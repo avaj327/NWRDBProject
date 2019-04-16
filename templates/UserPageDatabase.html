@@ -122,6 +122,8 @@ body {font-family: "Lato", sans-serif;}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
+	  
+	  {% if club.name != None %}
   		<form name='testform' method='POST' onsubmit='test.py'>
 		<fieldset>
 			Activity participated in: <input type='textbox' name='activity' style="margin:10px; width:260px"> 
@@ -130,6 +132,7 @@ body {font-family: "Lato", sans-serif;}
 			<input type='submit' name='submit' value='Submit'>
 		</fieldset>
 		</form>
+	  {% endif %}
 	<br>
 	<table border=yes cellpadding="6">
 	<tr>
