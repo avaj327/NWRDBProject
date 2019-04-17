@@ -15,7 +15,7 @@ body {
   float: left;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 19px 16px;
   text-decoration: none;
   font-size: 17px;
 }
@@ -46,8 +46,11 @@ body {
 <div class="topnav">
   	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
-	<a href= {{url_for('logout')}}>Logout</a>
-  <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
+		{% if adminlevel > 0 %}
+		<a href= {{url_for('adminPage')}}>Admin</a>
+		{% endif %}
+	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
+  <p style = "color:white;padding-right: 50px;" align = "right">Logged in as {{username}}</p>
 </div>
 
 <h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
@@ -122,8 +125,8 @@ body {font-family: "Lato", sans-serif;}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
-	  
-	  {% if club.name != None %}
+		
+		{% if club.name != None %}
   		<form name='testform' method='POST' onsubmit='test.py'>
 		<fieldset>
 			Activity participated in: <input type='textbox' name='activity' style="margin:10px; width:260px"> 
@@ -132,7 +135,7 @@ body {font-family: "Lato", sans-serif;}
 			<input type='submit' name='submit' value='Submit'>
 		</fieldset>
 		</form>
-	  {% endif %}
+		{% endif %}
 	<br>
 	<table border=yes cellpadding="6">
 	<tr>
