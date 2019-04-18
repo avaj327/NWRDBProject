@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:powderblue;">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 19px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  	<a href= {{url_for('viewUser')}}>Home</a>
+	<a href= {{url_for('clublist')}}>Club List</a>
+		{% if adminlevel > 0 %}
+		<a href= {{url_for('adminPage')}}>Admin</a>
+		{% endif %}
+	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
+  <p style = "color:white;padding-right: 50px;" align = "right">Logged in as {{username}}</p>
+</div>
+
+<h1 style="color:red;" style="font-size: 33px;"><img title="School Logo" alt="School Logo" src="https://p13cdn4static.sharpschool.com/UserFiles/Servers/Server_273230/Image/web-logo.png" width = "70" height= "70">North Warren Club Database<div id="motto"></div></h1>
+
+
+<div style="background-color:#0000ff;color:white;padding:20px;">
+  <h2>Welcome!</h2>
+  <p>You are officially logged on to the North Warren Club Database!</p>
+  <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
+</div> 
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</body>
+</html>
