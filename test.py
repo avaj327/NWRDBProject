@@ -5,7 +5,7 @@ Created on Mon Nov  5 00:06:53 2018
 @author: Tyler Johnson and Sean Pergola
 """
 
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect, url_for
 import sqlite3
 from passlib.hash import sha256_crypt
 from clubs import clubs
@@ -47,7 +47,7 @@ def index():
 def hello():
 	return 'Hello, World'
 
-@app.route('/dataentry/', methods=["POST", "GET"])
+@app.route('/dataentry', methods=["POST", "GET"])
 def dataEntry():
 	if (request.method=="POST"):
 		user = session['user']
@@ -65,7 +65,7 @@ def dataEntry():
 	else:
 		return redirect("/login")
 
-@app.route('/entrylist/')
+@app.route('/entrylist')
 def viewEntries():
 	conn = sqlite3.connect('database.db')
 	cur = conn.cursor()
@@ -92,9 +92,14 @@ def clublist():
 	if (request.method=="POST"):
 		pass#TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
 	else:
-		return render_template(templates["clubList"], clublist=clubs.getAll())
+		try:
+			username = session['user'][0]
+			return render_template(templates["clubList"], clublist=clubs.getAll(), username=username)
+		except KeyError:
+			
 
-@app.route('/user/', methods=["POST","GET"])
+
+@app.route('/user', methods=["POST","GET"])
 def viewUser():
 	if ('user' in session):
 		user = session['user']
@@ -104,6 +109,9 @@ def viewUser():
 		rawAdvisories = user[4].split(",")
 		entries = session['entries']
 
+		print (rawMemberships)
+		print(rawAdvisories)
+
 		memberships_ = []
 		advisories_ = []
 
@@ -112,7 +120,7 @@ def viewUser():
 
 		membershipClubs = []
 
-		if rawMemberships != '[]':
+		if rawMemberships != ['[]']:
 			#strip unnecessary characters for memberships
 			for each in rawMemberships:
 				i = 0
@@ -151,8 +159,10 @@ def viewUser():
 							each = each[:i] + " " + each[i+1:]
 				each = each[:len(each)]
 				memberships.append(each)
+		else:
+			memberships.append("None")
 
-		if rawAdvisories != '[]':
+		if rawAdvisories != ['[]']:
 			#strip unnecessary characters for advisories
 			for each in rawAdvisories:
 				i = 0
@@ -265,10 +275,6 @@ def makeuser():
 		cur = conn.cursor()
 		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), str(request.form.getlist('advisories'))]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
-		#for userClub in request.form.getlist('memberships'):
-		#    fixName(userClub)
-		#    tableName=str('CREATE TABLE IF NOT EXISTS' + request.form['username'] + "»" + str(userClub) + userTableFields)
-		#    cur.execute(tableName)
 		conn.commit()
 		conn.close()
 		return "Sent."
@@ -280,9 +286,9 @@ def fourohfour(e):
 	test = request.path
 	for tempurl in app.url_map.iter_rules():
 		if str.lower(test) == str.lower(str(tempurl)):
-			return redirect(url_for(str(tempurl)[1:]))
+			return redirect(str(tempurl)) #TODO: Fix 404 for /USER
 
-	return(render_template(templates["404"]), url=str(tempurl))
+	return render_template(templates["404"], url=str(test))
 
 @app.route('/logout')
 def logout():
