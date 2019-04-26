@@ -47,7 +47,7 @@ body {
   	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
 		{% if adminlevel > 0 %}
-		<a href= {{url_for('adminPage')}}>Admin</a>
+		<a href= {{url_for('viewAdmin')}}>Admin</a>
 		{% endif %}
 	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
   <p style = "color:white;padding-right: 50px;" align = "right">Logged in as {{username}}</p>
@@ -60,7 +60,7 @@ body {
   <h2>Welcome!</h2>
   <p>You are officially logged on to the North Warren Club Database!</p>
   <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
-</div> 
+</div>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -47,7 +47,7 @@ body {
   	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
 		{% if adminlevel > 0 %}
-		<a href= {{url_for('adminPage')}}>Admin</a>
+		<a href= {{url_for('viewAdmin')}}>Admin</a>
 		{% endif %}
 	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
   <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
@@ -60,7 +60,7 @@ body {
   </div>
 <br>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 <h2 style="color:red;">Club List</h2>
 <p>Click on the clubs to learn more:</p>
 
