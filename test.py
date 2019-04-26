@@ -17,8 +17,10 @@ templates = {
 	"makeuser": "makeuser.html",
 	"dataEntry": "index.htm",
 	"clubList": "DatabaseClubList1.html",
+	"clubListNoUser": "Clublist2.html",
 	"user": "UserPageDatabase.html",
-	"404": "errorpage404.html"
+	"404": "errorpage404.html",
+	"admin": "adminPage.html",
 }
 
 pointer = "»"
@@ -94,16 +96,16 @@ def clublist():
 	else:
 		try:
 			username = session['user'][0]
-			return render_template(templates["clubList"], clublist=clubs.getAll(), username=username)
+			return render_template(templates["clubList"], clublist=clubs.getAll(), username=username,adminlevel=session['user'][2])
 		except KeyError:
-			
+			return render_template(templates["clubListNoUser"], clublist=clubs.getAll())
 
 
 @app.route('/user', methods=["POST","GET"])
 def viewUser():
 	if ('user' in session):
 		user = session['user']
-		username = user[0] #SEAN ES MUY STUPIDO
+		username = user[0] #SEAN ES MUY STUPIDren Club DatabaO
 		adminLevel = user[2]
 		rawMemberships = user[3].split(",")
 		rawAdvisories = user[4].split(",")
@@ -199,7 +201,7 @@ def viewUser():
 
 			membershipClubs.append(club)
 
-		return render_template(templates["user"], username=username,adminLevel=adminLevel,memberships=membershipClubs,advisories=advisories)
+		return render_template(templates["user"], username=username,adminlevel=adminLevel,memberships=membershipClubs,advisories=advisories)
 	else:
 		return redirect('/login')
 
@@ -208,9 +210,9 @@ def viewAdmin():
 	if 'user' in session:
 		user = session['user']
 		if user[2] != 0:
-			return 'Hello, admin'
+			return render_template(templates['admin'],adminlevel=session['user'][2],username=session['user'][0])
 		else:
-			return 'ERROR: No admin capabilities found!'
+			return redirect('/user')
 	else:
 		return redirect('/login')
 
