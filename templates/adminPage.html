@@ -46,9 +46,7 @@ body {
 <div class="topnav">
   	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
-		{% if adminlevel > 0 %}
-		<a href= {{url_for('viewAdmin')}}>Admin</a>
-		{% endif %}
+		<a href= {{url_for('adminPage')}}>Admin</a>
 	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
   <p style = "color:white;padding-right: 50px;" align = "right">Logged in as {{username}}</p>
 </div>
@@ -60,9 +58,76 @@ body {
   <h2>Welcome!</h2>
   <p>You are officially logged on to the North Warren Club Database!</p>
   <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
-</div>
+</div> 
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<h2 style="color:red;">Your Clubs</h2>
+<p>Click on the clubs to enter your hours:</p>
+
+<div class="tab">
+{% for i in range(memberships|length)%}
+{% set club = memberships[i] %}
+ <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
+{% endfor %}
+</div>
+{% for i in range(memberships|length)%}
+{% set club = memberships[i] %}
+  <div id="club + {{i}}" class="tabcontent">
+  <h3>{{club.name}}</h3>
+  <p>{{club.desc}}</p>
+
+		{% if club.name != None %}
+  		<form name='testform' method='POST' onsubmit='test.py'>
+		<fieldset>
+			Activity participated in: <input type='textbox' name='activity' style="margin:10px; width:260px">
+			Hours spent on activity: <input type='textbox' name='hour' style="margin:10px; width:200px">
+			<input type='textbox' value = '{{club.name}}' name='club' style="margin:0px; width:0px; height:0px; border:0px; margin:0px; "><br><br>
+			<input type='submit' name='submit' value='Submit'>
+		</fieldset>
+		</form>
+		{% endif %}
+	<br>
+	<table border=yes cellpadding="6">
+	<tr>
+		<td>Activity</td>
+		<td>Hours</td>
+		<td>Approved y/n</td>
+	<tr/>
+	{% for j in range(club.entries|length)%}
+	<tr>
+		<td>{{club.entries[j][2]}}</td>
+		<td>{{club.entries[j][3]}}</td>
+	{% if club.entries[j][4] == 1 %}
+		<td>Yes</td>
+	{% endif %}
+	{% if club.entries[j][4] == 0 %}
+		<td>No<td>
+	{% endif %}
+	</tr>
+	{% endfor %}
+</table>
+  </div>
+  {% endfor %}
+
+<script>
+function clubSpot(evt, clubName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(clubName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
 </body>
 </html>
