@@ -34,7 +34,7 @@ body{
         <h1>Error 404</h1>
 		<h6><img class="pic" src="https://image.flaticon.com/icons/png/512/15/15135.png" style="width:100px; height:100px;"></h6>
         <h3>The page "{{url}}" does not exist</h3>
-        <h4>Click <a href="login">here</a> to login</h4>
+        <h4>Click <a href={{url_for('login')}}>here</a> to login</h4>
     	</div>
 </div>
 </body>
