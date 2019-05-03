@@ -137,7 +137,12 @@ body {font-family: "Lato", sans-serif;}
 		<td>{{club.entries[j][0]}}</td>
 		<td>{{club.entries[j][2]}}</td>
 		<td>{{club.entries[j][3]}}</td>
-		<td><button type="button">Approve</button></td>
+		{% if club.entries[j][4] == 1 %}
+			<td>Approved</td>
+		{% endif %}
+		{% if club.entries[j][4] == 0 %}
+			<td><button type="button">Approve</button></td>
+		{% endif %}
 	</tr>
 	{% endfor %}
 </table>
