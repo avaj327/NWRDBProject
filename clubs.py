@@ -44,7 +44,7 @@ class clubs():
 		global infoList
 		array = []
 		for key in infoList:
-			if key == "None":
+			if key == "None" or key == "No Advisories":
 				continue
 			array.append(clubs(key))
 

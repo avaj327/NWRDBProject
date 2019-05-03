@@ -156,17 +156,13 @@ def viewAdmin():
 	else:
 		return redirect('/login')
 
-@app.route('/adminPage')
-def adminPage():
-	return redirect('/admin')
-
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')
 
 def fixArray(array):
 	user = session['user']
-	rawArray = user[3].split(",")
+	rawArray = array.split(",")
 	entries = session['entries']
 
 	array_ = []
