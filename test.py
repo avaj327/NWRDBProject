@@ -156,6 +156,10 @@ def viewAdmin():
 	else:
 		return redirect('/login')
 
+@app.route('/adminPage')
+def adminPage():
+	return redirect('/admin')
+
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')
@@ -296,3 +300,10 @@ def fourohfour(e):
 def logout():
 	session.clear()
 	return redirect('/login')
+
+@app.route('/testemail')
+def sendemail():
+	yag = yagmail.SMTP()
+	contents = "Hello world"
+	yag.send('seanpergola@gmail.com', 'Yagmail test', contents)
+	return 'Email sent to seanpergola@gmail.com'

@@ -46,7 +46,7 @@ body {
 <div class="topnav">
   	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
-		<a href= {{url_for('adminPage')}}>Admin</a>
+		<a href= {{url_for('viewAdmin')}}>Admin</a>
 	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
   <p style = "color:white;padding-right: 50px;" align = "right">Logged in as {{username}}</p>
 </div>
@@ -58,7 +58,7 @@ body {
   <h2>Welcome!</h2>
   <p>You are officially logged on to the North Warren Club Database!</p>
   <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
-</div> 
+</div>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,13 +66,13 @@ body {
 <p>Click on the clubs to enter your hours:</p>
 
 <div class="tab">
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
+{% for i in range(advisories|length)%}
+{% set club = advisories[i] %}
  <button class="tablinks" onclick="clubSpot(event, 'club + {{i}}')" id="defaultOpen">{{club.name}}</button>
 {% endfor %}
 </div>
-{% for i in range(memberships|length)%}
-{% set club = memberships[i] %}
+{% for i in range(advisories|length)%}
+{% set club = advisories[i] %}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
