@@ -46,7 +46,9 @@ body {
 <div class="topnav">
   	<a href= {{url_for('viewUser')}}>Home</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
+		{% if adminlevel > 0 %}
 		<a href= {{url_for('viewAdmin')}}>Admin</a>
+		{% endif %}
 	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
   <p style = "color:white;padding-right: 50px;" align = "right">Logged in as {{username}}</p>
 </div>
@@ -57,13 +59,59 @@ body {
 <div style="background-color:#0000ff;color:white;padding:20px;">
   <h2>Welcome!</h2>
   <p>You are officially logged on to the North Warren Club Database!</p>
-  <p>Here, you can track hours for your different clubs, track your attendence in said clubs, or join new clubs altogether!</p>
+  <p>Here, you can approve club activity submissions and view different club entries.</p>
 </div>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<h2 style="color:red;">Your Clubs</h2>
-<p>Click on the clubs to enter your hours:</p>
+<style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 30%;
+    height: 300px;
+}
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #0000ff;
+}
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #ff0000;
+}
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 70%;
+    border-left: none;
+    height: 300px;
+}
+</style>
+</head>
+<body>
+
+<h2 style="color:red;">Your Advisory Clubs</h2>
+<p>Click on the the club to approve submissions.</p>
 
 <div class="tab">
 {% for i in range(advisories|length)%}
@@ -76,34 +124,20 @@ body {
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
-
-		{% if club.name != None %}
-  		<form name='testform' method='POST' onsubmit='test.py'>
-		<fieldset>
-			Activity participated in: <input type='textbox' name='activity' style="margin:10px; width:260px">
-			Hours spent on activity: <input type='textbox' name='hour' style="margin:10px; width:200px">
-			<input type='textbox' value = '{{club.name}}' name='club' style="margin:0px; width:0px; height:0px; border:0px; margin:0px; "><br><br>
-			<input type='submit' name='submit' value='Submit'>
-		</fieldset>
-		</form>
-		{% endif %}
 	<br>
 	<table border=yes cellpadding="6">
 	<tr>
+		<td>Name</td>
 		<td>Activity</td>
 		<td>Hours</td>
-		<td>Approved y/n</td>
+		<td>Approve</td>
 	<tr/>
 	{% for j in range(club.entries|length)%}
 	<tr>
+		<td>{{club.entries[j][0]}}</td>
 		<td>{{club.entries[j][2]}}</td>
 		<td>{{club.entries[j][3]}}</td>
-	{% if club.entries[j][4] == 1 %}
-		<td>Yes</td>
-	{% endif %}
-	{% if club.entries[j][4] == 0 %}
-		<td>No<td>
-	{% endif %}
+		<td><button type="button">Approve</button></td>
 	</tr>
 	{% endfor %}
 </table>
