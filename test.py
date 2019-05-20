@@ -13,6 +13,8 @@ import yagmail
 
 app = Flask(__name__)
 
+yag = yagmail.SMTP('pergsy@gmail.com')
+
 templates = {
 	"login": "DataBaseLogin1.html",
 	"makeuser": "makeuser.html",
@@ -299,7 +301,6 @@ def logout():
 
 @app.route('/testemail')
 def sendemail():
-	yag = yagmail.SMTP()
 	contents = "Hello world"
 	yag.send('seanpergola@gmail.com', 'Yagmail test', contents)
 	return 'Email sent to seanpergola@gmail.com'
