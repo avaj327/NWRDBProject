@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <p>Hello {username}</p>
+  <p>You are receiving this email as a confirmation to activate your North Warren Database.</p>
+  <p>If you did not sign up for an account, ignore this email.</p>
+  <p><a href="url_for('activate', request={placeholder})">Click here</a> to activate your account.</p>
+</body>
+</html>
