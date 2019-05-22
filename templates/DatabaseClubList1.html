@@ -119,7 +119,8 @@ body {font-family: "Lato", sans-serif;}
 {% set club = clublist[i] %}
   <div id="club + {{i}}" class="tabcontent">
 <form name='testform' method='POST' onsubmit='test.py'>
-  <input type = "button" class="button" value="{{club.name}}" name="memberships" onclick='?add={{club.name}}'> Click here!
+	<input type='textbox' value = '{{club.name}}' name='club' style="margin:0px; width:0px; height:0px; border:0px; margin:0px; ">
+  <input type='submit' name='submit' value='Add Club'>
 	  </form>
   <p>{{club.desc}}</p>
    Click the button above to add the club to your clublist!
