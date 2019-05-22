@@ -138,11 +138,11 @@ body {font-family: "Lato", sans-serif;}
 	<tr/>
 	{% for j in range(club.entries|length)%}
 	<tr>
+<form name='testform' method='POST' onsubmit='test.py'>
 		<td>{{club.entries[j][0]}}</td>
 		<td>{{club.entries[j][2]}}</td>
 		<td>{{club.entries[j][3]}}</td>
-<form name='testform' method='POST' onsubmit='test.py'>
-		<td><button type="button">Approve</button></td>
+		<td><input type='submit' name='submit' value='Approve'></td>
 </form>
 	</tr>
 	{% endfor %}
