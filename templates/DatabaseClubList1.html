@@ -47,7 +47,7 @@ body {
   	<a href= {{url_for('viewUser')}}>User</a>
 	<a href= {{url_for('clublist')}}>Club List</a>
 		{% if adminlevel > 0 %}
-		<a href= {{url_for('viewAdmin')}}>Admin</a>
+		<a href= {{url_for('viewAdmin')}}>Adviser</a>
 		{% endif %}
 	<a href= {{url_for('logout')}} style="float:right;">Logout</a>
   <p style = "color:white;padding-right: 30px;" align = "right">Logged in as {{username}}</p>
