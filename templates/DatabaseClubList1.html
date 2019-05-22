@@ -118,9 +118,11 @@ body {font-family: "Lato", sans-serif;}
 {% for i in range(clublist|length)%}
 {% set club = clublist[i] %}
   <div id="club + {{i}}" class="tabcontent">
+<form name='testform' method='POST' onsubmit='test.py'>
   <input type = "button" class="button" value="{{club.name}}" name="memberships" onclick='?add={{club.name}}'> Click here!
+	  </form>
   <p>{{club.desc}}</p>
-   Click the name of the club to add it to your clublist!
+   Click the button above to add the club to your clublist!
   </div>
   {% endfor %}
 <script>
