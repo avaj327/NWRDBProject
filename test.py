@@ -13,11 +13,9 @@ import yagmail
 
 app = Flask(__name__)
 
-yag = yagmail.SMTP('pergsy@gmail.com')
-
 templates = {
 	"login": "DataBaseLogin1.html",
-	"makeuser": "makeuser.html",
+	"makeuser": "Signup page.html",
 	"dataEntry": "index.htm",
 	"clubList": "DatabaseClubList1.html",
 	"clubListNoUser": "Clublist2.html",
@@ -50,9 +48,10 @@ def refreshEntries():
 	username = session['user'][0]
 	entries = []
 	for i,row in enumerate(cur.execute("SELECT * FROM userEntries")):
-		if row[0] == username:
-			entries.append(row)
+		entries.append(row)
+
 	session['entries'] = entries
+
 
 	conn.commit()
 	conn.close()
@@ -130,13 +129,13 @@ def viewUser():
 
 		refreshEntries()
 		return redirect("/user")
-	elif ('user' in session):
+	elif (request.method=="GET" and 'user' in session):
 		user = session['user']
 		username = user[0] #SEAN ES MUY STUPIDO
 		adminLevel = user[2]
 		rawMemberships = user[3]
 
-		memberships = fixArray(rawMemberships)
+		memberships = fixArray(rawMemberships, False)
 
 		refreshEntries()
 
@@ -145,24 +144,27 @@ def viewUser():
 	else:
 		return redirect('/login')
 
-@app.route('/admin')
+@app.route('/admin', methods=["GET", "POST"])
 def viewAdmin():
-	if 'user' in session:
-		user = session['user']
-		if user[2] != 0:
-			advisories = fixArray(user[4])
+	if request.method == "GET":
+		if 'user' in session:
+			user = session['user']
+			if user[2] != 0:
+				advisories = fixArray(user[4], True)
 
-			return render_template(templates['admin'],adminlevel=session['user'][2],username=session['user'][0],advisories=advisories)
+				return render_template(templates['admin'],adminlevel=session['user'][2],username=session['user'][0],advisories=advisories)
+			else:
+				return redirect('/user')
 		else:
-			return redirect('/user')
-	else:
-		return redirect('/login')
+			return redirect('/login')
+	elif request.method == "POST":
+		return "TODO: Implement post method"
 
 @app.route('/html')
 def html():
 	return render_template('test.html', name='Sean')
 
-def fixArray(array):
+def fixArray(array, admin):
 	user = session['user']
 	rawArray = array.split(",")
 	entries = session['entries']
@@ -220,7 +222,8 @@ def fixArray(array):
 		club = clubs(each)
 		for entry in entries:
 			if club.name == entry[1]:
-				club.addEntry(entry)
+				if user[0] == entry[0] or admin:
+					club.addEntry(entry)
 
 		arrayClubs.append(club)
 
@@ -277,11 +280,30 @@ def makeuser():
 	if (request.method=="POST"):
 		conn = sqlite3.connect('database.db')
 		cur = conn.cursor()
+		attemptusername = request.form['username']
+
+		attemptpass = request.form['password']
+		numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+		passfail = False
+		for each in numbers:
+			if each in attemptpass:
+				passfail = False
+				break
+			else:
+				passfail = True
+		if not passfail:
+			if lower(attemptpass) == attemptpass or upper(attemptpass) == attemptpass:
+				passfail = True
+
+		for row in cur.execute("SELECT * FROM users"):
+			if row[0] == attemptusername:
+				userfail = True
+
 		userinfo = [request.form['username'], sha256_crypt.hash(request.form['password']), int(request.form['adminLevel']), str(request.form.getlist('memberships')), str(request.form.getlist('advisories'))]
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", userinfo)
 		conn.commit()
 		conn.close()
-		return "Sent."
+		return render_template(templates["makeruser"], passfail = passfail, userfail = userfail, success = (passfail or userfail))
 	else:
 		return render_template(templates["makeuser"])
 
@@ -301,6 +323,7 @@ def logout():
 
 @app.route('/testemail')
 def sendemail():
+	yag = yagmail.SMTP()
 	contents = "Hello world"
 	yag.send('seanpergola@gmail.com', 'Yagmail test', contents)
 	return 'Email sent to seanpergola@gmail.com'
