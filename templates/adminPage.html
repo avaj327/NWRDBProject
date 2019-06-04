@@ -124,7 +124,7 @@ body {font-family: "Lato", sans-serif;}
   <div id="club + {{i}}" class="tabcontent">
   <h3>{{club.name}}</h3>
   <p>{{club.desc}}</p>
-<form name='testform' method='POST' onsubmit='test.py'>
+<form name='promoteForm' method='POST' onsubmit='test.py'>
 			UserID: <input type='textbox' name='UserID' style="margin:10px; width:260px"><input type='submit' name='Promote' value='Promote'><input type='submit' name='Demote' value='Demote'>
 			<input type='textbox' value = '{{club.name}}' name='club' style="margin:0px; width:0px; height:0px; border:0px; margin:0px; ">
 		</form>
@@ -138,7 +138,7 @@ body {font-family: "Lato", sans-serif;}
 	<tr/>
 	{% for j in range(club.entries|length)%}
 	<tr>
-<form name='testform' method='POST' onsubmit='test.py'>
+<form name='approveForm' method='POST' onsubmit='test.py'>
 		<td>{{club.entries[j][0]}}</td>
 		<td>{{club.entries[j][2]}}</td>
 		<td>{{club.entries[j][3]}}</td>
