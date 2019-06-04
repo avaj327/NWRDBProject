@@ -106,12 +106,33 @@ def viewEntries():
 
 @app.route('/clubs', methods=["POST", "GET"])
 def clublist():
+	conn = sqlite3.connect('database.db')
+	cur = conn.cursor()
 	if (request.method=="POST"):
-		pass#TODO: On POST, use URL paramater to add club to membership list, create SQL table with the address username/club, and refresh page
+		wantedclub = request.form['club']
+		temparray = fixArray(session['user'][3],False)
+		newtemparray = []
+		username = session['user'][0]
+		print(temparray)
+
+
+		for each in temparray:
+			newtemparray.append(each.name)
+
+		newtemparray.append(wantedclub)
+
+		exlist = (str(newtemparray), session['user'][0])
+		cur.execute("UPDATE users SET memberships = ? WHERE username = ?", exlist)
+
+		conn.commit()
+		conn.close()
+
+
+		return render_template(templates["clubList"], clublist=clubs.getAll(), username=username,adminlevel=session['user'][2], memberships=exlist)
 	else:
 		try:
 			username = session['user'][0]
-			return render_template(templates["clubList"], clublist=clubs.getAll(), username=username,adminlevel=session['user'][2])
+			return render_template(templates["clubList"], clublist=clubs.getAll(), username=username,adminlevel=session['user'][2], memberships=session['user'][3])
 		except KeyError:
 			return render_template(templates["clubListNoUser"], clublist=clubs.getAll())
 
